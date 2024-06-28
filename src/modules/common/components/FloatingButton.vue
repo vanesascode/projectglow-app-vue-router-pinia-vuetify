@@ -1,8 +1,9 @@
 <template>
-  <v-fab icon="mdi-plus" @click="$emit('click')" class="floating-button"></v-fab>
+  <v-fab :icon="icon" @click="$emit('click')" class="floating-button"></v-fab>
 </template>
 
 <script setup lang="ts">
+defineProps(['icon', 'color']);
 defineEmits(['click']);
 </script>
 
@@ -14,7 +15,7 @@ defineEmits(['click']);
   right: 80px;
 
   button {
-    background-color: rgb(143, 43, 158);
+    background-color: v-bind(color);
   }
 }
 </style>
