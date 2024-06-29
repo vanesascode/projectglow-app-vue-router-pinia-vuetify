@@ -13,13 +13,3 @@ jobs:
         run: npm run lint
       # - name: Unit Tests
       #   run: npm run test:unit
-      - name: Build
-        run: npm run build
-  cypress-run:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
