@@ -1,5 +1,5 @@
-import ProjectsLayout from '@/modules/projects/layouts/ProjectsLayout.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import ProjectsLayout from '@/modules/projects/layouts/ProjectsLayout.vue';
+import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,17 +13,22 @@ const router = createRouter({
         {
           path: 'projects',
           name: 'projects',
-          component: () => import('@/modules/projects/views/ProjectsView.vue')
+          component: () => import('@/modules/projects/views/ProjectsView.vue'),
         },
         {
           path: 'project/:id',
           props: true,
           name: 'project',
-          component: () => import('@/modules/projects/views/ProjectView.vue')
-        }
-      ]
-    }
-  ]
-})
+          component: () => import('@/modules/projects/views/ProjectView.vue'),
+        },
+      ],
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      redirect: { name: 'projects' },
+    },
+  ],
+});
 
-export default router
+export default router;
