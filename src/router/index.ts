@@ -25,11 +25,6 @@ const router = createRouter({
       ],
     },
     {
-      path: '/projects',
-      name: 'projects',
-      component: ProjectView,
-    },
-    {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       redirect: { name: 'projects' },
