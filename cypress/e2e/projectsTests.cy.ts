@@ -1,5 +1,4 @@
 // https://on.cypress.io/api
-
 describe('projects tests', () => {
   it('create a project clicking on the save button', () => {
     cy.visit('/');
@@ -7,6 +6,7 @@ describe('projects tests', () => {
     cy.get('#input-8').clear();
     cy.get('#input-8').type('New Project');
     cy.get('[type="submit"] > .v-btn__content').click();
+    cy.get('tbody > :nth-child(1) > :nth-child(2)').should('exist').contains('Project');
   });
 
   it('enter a project page', () => {
