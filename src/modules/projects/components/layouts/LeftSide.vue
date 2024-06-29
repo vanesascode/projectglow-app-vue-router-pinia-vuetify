@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer>
     <div class="project-general-link-wrapper">
-      <RouterLink to="/projects" class="text-decoration-none">
+      <RouterLink to="/#/projects" class="text-decoration-none">
         <v-list-item class="project-general-link">PROJECTS</v-list-item>
       </RouterLink>
 
