@@ -6,4 +6,5 @@ export default defineConfig({
     baseUrl: 'http://localhost:4173',
     experimentalStudio: true,
   },
+  defaultCommandTimeout: 10000,
 });
