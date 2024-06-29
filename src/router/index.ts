@@ -11,12 +11,12 @@ const router = createRouter({
       component: ProjectsLayout,
       children: [
         {
-          path: 'projects',
+          path: '/projects',
           name: 'projects',
           component: () => import('@/modules/projects/views/ProjectsView.vue'),
         },
         {
-          path: 'project/:id',
+          path: '/project/:id',
           props: true,
           name: 'project',
           component: () => import('@/modules/projects/views/ProjectView.vue'),
