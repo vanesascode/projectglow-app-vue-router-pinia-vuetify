@@ -3,6 +3,7 @@
     <v-card :title="title">
       <v-form @submit.prevent>
         <v-text-field
+          id="input"
           v-model="inputValue"
           :label="label"
           ref="inputRef"
