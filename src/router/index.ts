@@ -1,4 +1,5 @@
 import ProjectsLayout from '@/modules/projects/layouts/ProjectsLayout.vue';
+import ProjectView from '@/modules/projects/views/ProjectView.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
@@ -22,6 +23,11 @@ const router = createRouter({
           component: () => import('@/modules/projects/views/ProjectView.vue'),
         },
       ],
+    },
+    {
+      path: '/projects',
+      name: 'projects',
+      component: ProjectView,
     },
     {
       path: '/:pathMatch(.*)*',
