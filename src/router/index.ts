@@ -1,9 +1,8 @@
 import ProjectsLayout from '@/modules/projects/layouts/ProjectsLayout.vue';
-import ProjectView from '@/modules/projects/views/ProjectView.vue';
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
