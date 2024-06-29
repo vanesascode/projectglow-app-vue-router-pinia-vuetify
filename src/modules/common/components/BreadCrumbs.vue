@@ -26,7 +26,7 @@ watch(
       {
         title: 'Projects',
         disabled: false,
-        href: '/projects',
+        href: '/#/projects',
       },
       {
         title: props.name,
