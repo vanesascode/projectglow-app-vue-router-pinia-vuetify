@@ -1,6 +1,6 @@
-# notion-app
+# VUETIFY, PINIA 'PROJECTS MANAGEMENT APP' TESTED WITH CYPRESS
 
-This template should help get you started developing with Vue 3 in Vite.
+![Screenshot 2024-06-30 at 14 50 53](https://github.com/vanesascode/projects-app-vue-pinia-cypress/assets/131259155/e3709a5d-d3d5-4bc4-9c58-8e63bef1a36d)
 
 ## Recommended IDE Setup
 
