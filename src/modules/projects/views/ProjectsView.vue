@@ -3,9 +3,9 @@
     <thead>
       <tr>
         <th class="text-left"></th>
-        <th class="text-left">Project</th>
-        <th class="text-left">Tasks</th>
-        <th class="text-left">Progress</th>
+        <th class="text-left">PROJECT</th>
+        <th class="text-left">TASKS</th>
+        <th class="text-left">PROGRESS</th>
       </tr>
     </thead>
 
@@ -20,11 +20,12 @@
         <td>{{ project.name }}</td>
         <td>{{ project.tasks.length }}</td>
         <td>
-          <v-progress-linear :model-value="project.progress" height="25" color="rgb(143, 43, 158)"
-            ><strong>
-              {{ project.progress ? project.progress + '%' : 'No tasks yet' }}</strong
-            ></v-progress-linear
-          >
+          <v-progress-linear :model-value="project.progress" height="25" color="rgb(143, 43, 158)">
+            <strong v-if="project.tasks && project.tasks.length > 0">
+              {{ project.progress ? project.progress : '0' }}%</strong
+            >
+            <strong v-else>Add tasks</strong>
+          </v-progress-linear>
         </td>
       </tr>
     </tbody>
