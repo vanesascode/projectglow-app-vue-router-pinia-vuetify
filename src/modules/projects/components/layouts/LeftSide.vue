@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { useProjectsStore } from '@/modules/projects/store/projects.store';
+import { useProjectsStore } from '@/stores/projects.store';
 
 const projectsStore = useProjectsStore();
 </script>
