@@ -1,5 +1,5 @@
 // import { loadFonts } from './webfontloader'
-// import vuetify from './vuetify';
+import vuetify from './vuetify';
 // import vueI18n from './i18n'
 import router from '@/router';
 import { createPinia } from 'pinia';
@@ -14,5 +14,5 @@ export function registerPlugins(app: App) {
   app.use(router);
   //   app.use(vueI18n)
   app.use(toast, options);
-  // app.use(vuetify);
+  app.use(vuetify);
 }
