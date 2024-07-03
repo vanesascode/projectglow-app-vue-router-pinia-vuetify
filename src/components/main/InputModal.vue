@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import FloatingButton from '@/modules/common/components/FloatingButton.vue';
+import FloatingButton from '@/components/main/FloatingButton.vue';
 import { onUpdated, ref } from 'vue';
 
 interface Props {
