@@ -1,32 +1,43 @@
-import ProjectsLayout from '@/modules/projects/layouts/ProjectsLayout.vue';
-import { createRouter, createWebHashHistory } from 'vue-router';
+import MainClientsView from '@/views/MainClientsView.vue';
+import MainAuthView from '@/views/MainAuthView.vue';
+import MainProjectsView from '@/views/MainProjectsView.vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import clientRoutes from './clientRoutes';
+import projectsRoutes from './projecstRoutes';
+import authRoutes from './authRoutes';
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
+      name: 'auth',
+      redirect: '/login',
+      component: MainAuthView,
+      children: [...authRoutes],
+    },
+    {
+      path: '/welcome',
       name: 'home',
-      redirect: { name: 'projects' },
-      component: ProjectsLayout,
-      children: [
-        {
-          path: '/projects',
-          name: 'projects',
-          component: () => import('@/modules/projects/views/ProjectsView.vue'),
-        },
-        {
-          path: '/project/:id',
-          props: true,
-          name: 'project',
-          component: () => import('@/modules/projects/views/ProjectView.vue'),
-        },
-      ],
+      component: () => import('@/views/auth/WelcomeView.vue'),
+    },
+
+    {
+      path: '/clients',
+      name: 'ClientsList',
+      component: MainClientsView,
+      children: [...clientRoutes],
+    },
+    {
+      path: '/clients/:clientName/projects',
+      name: 'ClientProjects',
+      component: MainProjectsView,
+      children: [...projectsRoutes],
     },
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
-      redirect: { name: 'projects' },
+      redirect: { name: '/' },
     },
   ],
 });
