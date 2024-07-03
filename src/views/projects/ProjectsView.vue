@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import InputModal from '@/modules/projects/components/ProjectsView/InputModal.vue';
+import { useProjectsStore } from '@/stores/projects.store';
+
+const projectsStore = useProjectsStore();
+</script>
+
 <template>
   <v-table>
     <thead>
@@ -14,7 +21,7 @@
         class="projects-row"
         v-for="(project, index) in projectsStore.projectsWithCompletition"
         :key="project.id"
-        @click="$router.push(`/project/${project.id}`)"
+        @click="$router.push({ name: 'project', params: { id: project.id } })"
       >
         <td>{{ index + 1 }}</td>
         <td>{{ project.name }}</td>
@@ -36,13 +43,6 @@
     label="Add a name to your project"
   />
 </template>
-
-<script setup lang="ts">
-import InputModal from '@/modules/projects/components/ProjectsView/InputModal.vue';
-import { useProjectsStore } from '@/modules/projects/store/projects.store';
-
-const projectsStore = useProjectsStore();
-</script>
 
 <style lang="scss" scoped>
 @import '@/assets/styles/main.scss';
