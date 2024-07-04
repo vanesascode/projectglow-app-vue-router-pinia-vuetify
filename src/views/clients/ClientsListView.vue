@@ -1,175 +1,181 @@
 <script setup lang="ts">
 import { useClientsStore } from '@/stores';
-import { onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAddPaginationFilters } from '@/use';
-
-import FilterTable from '@/components/tables/FilterTable.vue';
-
-const localProps = withDefaults(
-  defineProps<{
-    displayInCardMode?: boolean;
-  }>(),
-  {
-    displayInCardMode: true,
-  },
-);
+import { Client } from 'types';
+import InputModal from '@/components/main/InputModal.vue';
 
 const router = useRouter();
 const clientsStore = useClientsStore();
+
+const listAllClients = async (): Promise<void> => {
+  await clientsStore.getAllClients();
+};
 
 onBeforeMount(() => {
   listAllClients();
 });
 
-interface DataTableHeader {
-  text: string;
-  value: string;
-  class?: string;
-  sortable?: boolean;
-  width?: string;
-}
-
-const headers: Array<DataTableHeader> = [
-  {
-    text: 'Id',
-    value: 'id',
-  },
-  {
-    text: 'Name',
-    value: 'name',
-  },
-  {
-    text: 'Description',
-    value: 'description',
-  },
-  {
-    text: 'Enabled',
-    value: 'isEnabled',
-  },
-  {
-    text: 'Projects',
-    value: 'projects',
-    width: '100px',
-  },
-  {
-    text: 'Actions',
-    value: 'actions',
-    width: '100px',
-  },
-];
-
-const filterKeyList = ['Id', 'Name', 'Description'];
-const { addFilters } = useAddPaginationFilters();
-
-const listAllClients = async (): Promise<void> => {
-  const request: any = {
-    take: 999,
-    skip: 0,
-    sort: [],
-    filters: addFilters(filterKeyList, search.value),
-  };
-  await clientsStore.getClients(request);
-  console.log(clientsStore.clients);
-};
-
-const search = ref('');
-const searchItem = (event: string) => {
-  search.value = event;
-  listAllClients();
-};
-
-// Go to client's page
-
-export interface ClientBase {
-  id: number;
-  name: string;
-  logoUrl: string | null;
-  isEnabled: boolean;
-  description: string | null;
-  // projects: Project[];
-}
-
-const goToClient = (client: ClientBase): void => {
+const goToClient = (client: Client): void => {
   const routeData = router.resolve({ name: 'Client', params: { clientName: client.name } });
   window.open(routeData.href, '_blank');
 };
+
+const deleteClient = (client: Client): void => {
+  clientsStore.deleteClient(client);
+};
+
+// TABLE:
+
+const headers: ReadonlyArray<{
+  key: string;
+  title: string;
+  align: string;
+  sortable?: boolean;
+}> = [
+  {
+    key: 'id',
+    title: 'Id',
+    align: 'start',
+  },
+  {
+    key: 'name',
+    title: 'Name',
+    align: 'start',
+  },
+  {
+    key: 'description',
+    title: 'Description',
+    align: 'start',
+    sortable: false,
+  },
+  {
+    key: 'isEnabled',
+    title: 'Active',
+    align: 'start',
+  },
+  {
+    key: 'projects',
+    title: 'Projects',
+    align: 'start',
+    sortable: false,
+  },
+  {
+    key: 'actions',
+    title: 'Actions',
+    align: 'center',
+    sortable: false,
+  },
+];
+
+const clients = computed(() => clientsStore.clients);
+
+const handleInputValue = () => {
+  console.log(name);
+  clientsStore.addClient({ name: 'whaterver', description: 'whaterver' });
+};
+
+const goToProjects = (client: Client): void => {
+  const routeData = router.resolve({ name: 'ClientProjects', params: { clientId: client.id } });
+  window.open(routeData.href, '_blank');
+};
+
+const handleAddNewClient = (data: any): void => {
+  clientsStore.addClient(data);
+};
+
+// PAGINATION:
+
+const search = ref('');
+
+const page = ref(1);
+
+const itemsPerPage = ref(2);
+
+const pageCount = computed(() => {
+  console.log('pageCount', Math.ceil(clients.value.length / itemsPerPage.value));
+  return Math.ceil(clients.value.length / itemsPerPage.value);
+});
 </script>
 
 <template>
-  <h1>Clients List</h1>
-  <div v-for="client in clientsStore.clients" :key="client.id">
-    {{ client.name }}
-    <v-btn
-      class="mr-1"
-      icon="mdi-logout-variant"
-      color="accent"
-      size="30"
-      @click="goToClient(client)"
-    />
-  </div>
+  <v-card flat>
+    <v-card-title class="d-flex align-center pe-2 mt-5">
+      Clients List
 
-  <!-- <FilterTable
-    :headers="headers"
-    :data="clientStore.clients"
-    :loading="clientStore.loading"
-    :display-in-card-mode="localProps.displayInCardMode"
-    @search-item="searchItem"
-  > -->
-  <!-- ENABLED COLUMMN ADDINGS-->
-  <!-- <template #isEnabled="{ item }">
-      <v-icon v-if="item.isEnabled" icon="mdi-check" color="success" />
-      <v-icon v-else icon="mdi-cancel" color="red" />
-    </template> -->
+      <v-spacer></v-spacer>
 
-  <!-- ACTIONS  COLUMMN ADDINGS-->
-  <!-- <template #actions="{ item }">
-      <div class="d-flex ga-4"> -->
-  <!-- GO INTO CLIENT'S RESOURCES -->
+      <!-- Buscador por nombre -->
 
-  <!-- <v-tooltip :text="$t('common.tooltips.viewAs', { msg: item.name })" location="bottom">
-          <template #activator="{ props }">
-            <v-btn
-              class="mr-1"
-              icon="mdi-logout-variant"
-              color="accent"
-              size="30"
-              v-bind="props"
-              @click="viewAsClient(item as unknown as ClientListItemResponse)"
-            />
-          </template>
-        </v-tooltip> -->
+      <v-text-field
+        v-model="search"
+        density="compact"
+        label="Search"
+        prepend-inner-icon="mdi-magnify"
+        variant="solo-filled"
+        flat
+        hide-details
+        single-line
+      ></v-text-field>
+    </v-card-title>
 
-  <!-- EDIT CLIENT -->
+    <v-divider></v-divider>
 
-  <!-- <v-tooltip :text="$t('common.tooltips.edit', { msg: item.name })" location="bottom">
-          <template #activator="{ props }">
-            <v-btn
-              icon="mdi-pencil"
-              color="accent"
-              size="30"
-              v-bind="props"
-              @click="editClient(item as unknown as ClientListItemResponse)"
-            />
-          </template>
-        </v-tooltip> -->
+    <v-data-table
+      v-model:page="page"
+      v-model:search="search"
+      :headers="headers"
+      :items="clients"
+      :items-per-page="itemsPerPage"
+    >
+      <template v-slot:top>
+        <v-text-field
+          :model-value="itemsPerPage"
+          class="pa-2"
+          label="Items per page"
+          max="15"
+          min="-1"
+          type="number"
+          hide-details
+        ></v-text-field>
+      </template>
 
-  <!-- DELETE CLIENT -->
-  <!-- <v-tooltip :text="$t('common.tooltips.delete', { msg: item.name })" location="bottom"> -->
-  <!-- the props bind the template with the v-bind of the button -->
+      <template v-slot:item.projects="{ item }">
+        <v-btn icon="mdi-eye-outline" class="icon" variant="text" @click="goToProjects(item)" />
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <v-btn icon="mdi-pencil-outline" class="icon" variant="text" @click="goToClient(item)" />
+        <v-btn icon="mdi-delete-outline" class="icon" variant="text" @click="deleteClient(item)" />
+      </template>
 
-  <!-- <template #activator="{ props }">
-          ????? as ClientListItemResponse 
-            <v-btn
-              icon="mdi-trash-can-outline"
-              color="accent"
-              size="30"
-              v-bind="props"
-              @click="deleteClient(item as unknown as ClientListItemResponse)"
-            />
-          </template> 
-        </v-tooltip>
-      </div>
-    </template>-->
-  <!-- </FilterTable> -->
+      <!-- Pagination -->
+
+      <template v-slot:bottom>
+        <div class="text-center pt-2">
+          <v-pagination v-model="page" :length="pageCount"></v-pagination>
+        </div>
+      </template>
+    </v-data-table>
+  </v-card>
+
+  <!-- To add a new client -->
+
+  <InputModal
+    @new-client="handleAddNewClient($event)"
+    title="New Client"
+    name="Add a name to your client"
+    description="Add a description to your client"
+  />
 </template>
+
+<style lang="scss">
+.icon {
+  &:hover {
+    color: #299145;
+  }
+}
+.v-data-table-header__content {
+  font-weight: bolder;
+  font-size: 1rem;
+}
+</style>
