@@ -11,6 +11,16 @@ class ClientService {
     const response = await httpClient.get(`${baseUrl}`);
     return response.data;
   };
+
+  addClient = async (params: any): Promise<Client> => {
+    const response = await httpClient.post(`${baseUrl}`, params);
+    return response.data;
+  };
+
+  deleteClient = async (client: Client): Promise<Client> => {
+    const response = await httpClient.delete(`${baseUrl}/${client.id}`);
+    return response.data;
+  };
 }
 
 export default new ClientService();
