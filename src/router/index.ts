@@ -29,11 +29,12 @@ const router = createRouter({
       children: [...clientRoutes],
     },
     {
-      path: '/clients/:clientName/projects',
+      path: '/clients/:clientId/projects',
       name: 'ClientProjects',
       component: MainProjectsView,
       children: [...projectsRoutes],
     },
+
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
