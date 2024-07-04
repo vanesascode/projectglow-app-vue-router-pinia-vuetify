@@ -1,77 +1,160 @@
 <script setup lang="ts">
-import BreadCrumbs from '@/modules/common/components/BreadCrumbs.vue';
-import { useProjectsStore } from '@/stores/projects.store';
-import type { Project } from '@/modules/projects/interfaces/project.interface';
-import { ref, watch } from 'vue';
-import InputModal from '@/modules/projects/components/ProjectsView/InputModal.vue';
+import { useTasksStore } from '@/stores';
+import { computed, onMounted, ref } from 'vue';
+import InputModal from '@/components/main/InputModal.vue';
 
-import { useRouter } from 'vue-router';
+const tasksStore = useTasksStore();
 
-interface Props {
-  id: string;
-}
+const props = defineProps<{
+  clientId: string;
+  projectId: string;
+}>();
 
-const router = useRouter();
-const props = defineProps<Props>();
-const projectsStore = useProjectsStore();
-const project = ref<Project>();
+const listAllTasks = async (clientId: number, projectId: number): Promise<void> => {
+  await tasksStore.getAllTasks(clientId, projectId);
+};
 
-watch(
-  () => props.id,
-  () => {
-    project.value = projectsStore.projectList.find((project) => project.id === props.id);
-    if (project.value === undefined) {
-      router.replace('/projects');
-    }
+const clientIdNumber: number = parseInt(props.clientId, 10);
+const projectIdNumber: number = parseInt(props.projectId, 10);
+
+onMounted(async () => {
+  try {
+    await listAllTasks(clientIdNumber, projectIdNumber);
+  } catch (error) {
+    console.error('Error in onMounted hook:', error);
+  }
+});
+
+const tasks = computed(() => tasksStore.tasks);
+
+// PAGINATION:
+
+const search = ref('');
+
+const page = ref(1);
+
+const itemsPerPage = ref(2);
+
+const pageCount = computed(() => {
+  return Math.ceil(tasks.value.length / itemsPerPage.value);
+});
+
+// TABLE:
+
+const headers: ReadonlyArray<{
+  key: string;
+  title: string;
+  align: string;
+  sortable?: boolean;
+}> = [
+  // TODO: ADD THE TOGGLER TO SET THE COMPLETED DATE
+  {
+    key: 'id',
+    title: 'Id',
+    align: 'start',
   },
   {
-    immediate: true,
+    key: 'name',
+    title: 'Name',
+    align: 'start',
   },
-);
+  {
+    key: 'description',
+    title: 'Description',
+    align: 'start',
+    sortable: false,
+  },
+  {
+    key: 'completed',
+    title: 'Completed at',
+    align: 'start',
+    sortable: false,
+  },
+  {
+    key: 'actions',
+    title: 'Actions',
+    align: 'start',
+    sortable: false,
+  },
+];
 </script>
 
 <template>
-  <section>
-    <BreadCrumbs :name="project?.name ?? 'Project does not exist'" />
-  </section>
-  <section>
-    <v-table>
-      <thead>
-        <tr>
-          <th class="text-left">Finished</th>
-          <th class="text-left">Task</th>
-          <th class="text-left">Completed at</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="task in project?.tasks" :key="task.id">
-          <td>
-            <input
-              type="checkbox"
-              :checked="!!task.completedAt"
-              class="checkbox"
-              @change="() => projectsStore.toggleTask(project?.id, task.id)"
-            />
-          </td>
-          <td>{{ task.name }}</td>
-          <td>{{ task.completedAt }}</td>
-        </tr>
-      </tbody>
-    </v-table>
-  </section>
+  <v-card flat>
+    <v-card-title class="d-flex align-center pe-2 mt-5">
+      Tasks List for project {{ props.projectId }}
+
+      <v-spacer></v-spacer>
+
+      <!-- Buscador por nombre -->
+
+      <v-text-field
+        v-model="search"
+        density="compact"
+        label="Search"
+        prepend-inner-icon="mdi-magnify"
+        variant="solo-filled"
+        flat
+        hide-details
+        single-line
+      ></v-text-field>
+    </v-card-title>
+
+    <v-divider></v-divider>
+
+    <v-data-table
+      v-model:page="page"
+      v-model:search="search"
+      :headers="headers"
+      :items="tasks"
+      :items-per-page="itemsPerPage"
+    >
+      <template v-slot:top>
+        <v-text-field
+          :model-value="itemsPerPage"
+          class="pa-2"
+          label="Items per page"
+          max="15"
+          min="-1"
+          type="number"
+          hide-details
+          @update:model-value="itemsPerPage = parseInt($event, 10)"
+        ></v-text-field>
+      </template>
+
+      <template v-slot:item.actions="{ item }">
+        <v-btn icon="mdi-pencil-outline" class="icon" variant="text" @click="editTask(item)" />
+        <v-btn icon="mdi-delete-outline" class="icon" variant="text" @click="deleteTask(item)" />
+      </template>
+
+      <!-- Pagination -->
+
+      <template v-slot:bottom>
+        <div class="text-center pt-2">
+          <v-pagination v-model="page" :length="pageCount"></v-pagination>
+        </div>
+      </template>
+    </v-data-table>
+  </v-card>
+
+  <!-- To add a new project -->
+
   <InputModal
-    @value="(value) => projectsStore.addTask(project?.id, value)"
+    @new-client="handleAddNewTask($event)"
     title="New Task"
-    label="Add a name to your task"
+    name="Add a name to your task"
+    description="Add a description to your task"
   />
 </template>
 
 <style lang="scss">
-@import '@/assets/styles/main.scss';
-
-.checkbox {
-  width: 20px;
-  height: 20px;
-  accent-color: $primary-color;
+.icon {
+  &:hover {
+    color: #299145;
+  }
+}
+.v-data-table-header__content {
+  font-weight: bolder;
+  font-size: 1rem;
 }
 </style>
