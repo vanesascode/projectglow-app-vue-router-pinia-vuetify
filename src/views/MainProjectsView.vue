@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import LeftSide from '@/modules/projects/components/layouts/LeftSide.vue';
+import LeftSide from '@/components/layout/LeftSide.vue';
 </script>
 
 <style lang="scss">
