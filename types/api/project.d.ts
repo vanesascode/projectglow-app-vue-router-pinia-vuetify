@@ -10,7 +10,6 @@ export interface Project {
 }
 
 export interface ProjectState {
-  // projectsWithCompletition: any[];
   projects: Project[];
   project: Project;
   total: number;
