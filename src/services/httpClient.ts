@@ -22,7 +22,6 @@ const httpClient: AxiosInstance = axios.create(options);
 
 httpClient.interceptors.response.use(
   (response) => {
-    console.log('response received successfully', response);
     toastInterface.success('Data fetched sucessfully.');
     return response;
   },
