@@ -137,6 +137,7 @@ const pageCount = computed(() => {
           min="-1"
           type="number"
           hide-details
+          @update:model-value="itemsPerPage = parseInt($event, 10)"
         ></v-text-field>
       </template>
 
