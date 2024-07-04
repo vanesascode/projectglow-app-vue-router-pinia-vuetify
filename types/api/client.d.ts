@@ -1,10 +1,10 @@
 export interface Client {
   id: number;
   name: string;
-  logoUrl: string | null;
+  logoUrl?: string | null;
   isEnabled: boolean;
-  description: string | null;
-  projects: Project[];
+  description?: string | null;
+  projects?: Project[];
 }
 
 export interface ClientState {
