@@ -2,6 +2,8 @@
 import { useProjectsStore } from '@/stores';
 import { computed, onMounted, ref } from 'vue';
 import InputModal from '@/components/main/InputModal.vue';
+import { Project } from 'types';
+import router from '@/router';
 
 const projectsStore = useProjectsStore();
 
@@ -13,16 +15,15 @@ const listAllProjects = async (clientId: number): Promise<void> => {
   await projectsStore.getAllProjects(clientId);
 };
 
+const clientIdNumber: number = parseInt(props.clientId, 10);
+
 onMounted(async () => {
   try {
-    const clientIdNumber: number = parseInt(props.clientId, 10);
-    console.log('clientIdNumber', clientIdNumber);
-
     await listAllProjects(clientIdNumber);
-    console.log('projectsStore.projects', projectsStore.projects);
   } catch (error) {
     console.error('Error in onMounted hook:', error);
   }
+  console.log(projects);
 });
 
 const projects = computed(() => projectsStore.projects);
@@ -65,8 +66,8 @@ const headers: ReadonlyArray<{
     sortable: false,
   },
   {
-    key: 'isEnabled',
-    title: 'Active',
+    key: 'progress',
+    title: 'Progress',
     align: 'start',
   },
   {
@@ -82,26 +83,16 @@ const headers: ReadonlyArray<{
     sortable: false,
   },
 ];
+
+const goToTasks = (project: Project, clientIdNumber: number): void => {
+  console.log('project', project);
+  const routeData = router.resolve({
+    name: 'Project',
+    params: { clientId: clientIdNumber, projectId: project.id },
+  });
+  window.open(routeData.href, '_blank');
+};
 </script>
-
-<!-- <template>
-  <h1>asdf</h1>
-  <v-data-table-virtual :headers="headers" :items="projectsStore.projects" item-value="name">
-    <template v-slot:item.tasks="{ item }">
-      <v-btn icon="mdi-eye-outline" class="icon" variant="text" />
-    </template>
-    <template v-slot:item.actions="{ item }">
-      <v-btn icon="mdi-pencil-outline" class="icon" variant="text" />
-      <v-btn icon="mdi-delete-outline" class="icon" variant="text" />
-    </template>
-  </v-data-table-virtual>
-
-  <InputModal
-    title="New Client"
-    name="Add a name to your client"
-    description="Add a description to your client"
-  />
-</template> -->
 
 <template>
   <v-card flat>
@@ -146,8 +137,22 @@ const headers: ReadonlyArray<{
         ></v-text-field>
       </template>
 
+      <template v-slot:item.progress="{ item }">
+        <v-progress-linear :model-value="item.progress" height="25" color="rgb(143, 43, 158)">
+          <strong v-if="item.tasks && item.tasks.length > 0">
+            {{ item.progress ? item.progress : '0' }}%</strong
+          >
+          <strong v-else>Add tasks</strong>
+        </v-progress-linear>
+      </template>
+
       <template v-slot:item.tasks="{ item }">
-        <v-btn icon="mdi-eye-outline" class="icon" variant="text" @click="goToProjects(item)" />
+        <v-btn
+          icon="mdi-eye-outline"
+          class="icon"
+          variant="text"
+          @click="goToTasks(item, clientIdNumber)"
+        />
       </template>
       <template v-slot:item.actions="{ item }">
         <v-btn icon="mdi-pencil-outline" class="icon" variant="text" @click="goToClient(item)" />
@@ -164,7 +169,7 @@ const headers: ReadonlyArray<{
     </v-data-table>
   </v-card>
 
-  <!-- To add a new client -->
+  <!-- To add a new project -->
 
   <InputModal
     @new-client="handleAddNewProject($event)"
