@@ -17,17 +17,51 @@ export const useClientsStore = defineStore({
     ({
       clients: [] as Client[],
       client: defaultClient,
-      total: 0,
       loading: false,
     }) as ClientState,
   actions: {
-    async getClients() {
+    async getAllClients() {
       this.loading = true;
 
       try {
         const response = await clientService.getClients();
         this.clients = response ? response : [];
-        this.total = this.clients.length;
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async addClient({
+      name: nameValue,
+      description: descriptionValue,
+    }: {
+      name: string;
+      description: string;
+    }) {
+      this.loading = true;
+
+      try {
+        await clientService.addClient({
+          name: nameValue,
+          description: descriptionValue,
+          isEnabled: true,
+        });
+        await this.getAllClients();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async deleteClient(client: Client) {
+      this.loading = true;
+
+      try {
+        await clientService.deleteClient(client);
+        await this.getAllClients();
       } catch (error) {
         console.error(error);
       } finally {
