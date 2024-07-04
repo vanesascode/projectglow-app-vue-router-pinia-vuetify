@@ -30,7 +30,6 @@ const emits = defineEmits<{
 }>();
 
 const submitValue = () => {
-  // console.log(nameValue.value, descriptionValue.value);
   if (!nameValue.value) {
     inputRef.value?.focus();
     return;
