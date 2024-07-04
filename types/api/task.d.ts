@@ -1,5 +1,14 @@
 export interface Task {
-  id: string;
+  id: number;
   name: string;
-  completedAt?: Date;
+  description?: string | null;
+  completedAt?: Date | null;
+}
+
+export interface TaskState {
+  // tasksWithCompletition: any[];
+  tasks: Task[];
+  task: Task;
+  total: number;
+  loading: boolean;
 }
