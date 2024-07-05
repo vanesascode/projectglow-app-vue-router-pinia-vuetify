@@ -1,4 +1,4 @@
-import { Project } from 'types';
+import { Project, Task } from 'types';
 import { httpClient } from './httpClient';
 
 const baseUrl = '/clients';
@@ -9,10 +9,15 @@ class ProjectService {
     return response.data;
   };
   addProject = async (
-    newProject: { name: string; description: string; isEnabled: boolean },
+    newProject: { name: string; description: string; isEnabled: boolean; tasks: Task[] },
     clientId: number,
   ): Promise<Project> => {
     const response = await httpClient.post(`${baseUrl}/${clientId}/projects`, newProject);
+    return response.data;
+  };
+
+  deleteProject = async (project: Project, clientId: number): Promise<Project> => {
+    const response = await httpClient.delete(`${baseUrl}/${clientId}/projects/${project.id}`);
     return response.data;
   };
 }
