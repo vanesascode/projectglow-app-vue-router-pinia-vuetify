@@ -29,7 +29,7 @@ class TaskService {
   };
 
   editTask = async (
-    task: { name: string; description: string },
+    task: any,
     taskId: number,
     projectId: number,
     clientId: number,
