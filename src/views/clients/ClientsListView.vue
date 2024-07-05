@@ -85,6 +85,13 @@ const handleAddNewClient = (client: { name: string; description: string }): void
   clientsStore.addNewClient(client);
 };
 
+const handleEditClient = (
+  client: { name: string; description: string },
+  clientId: number,
+): void => {
+  clientsStore.editTheClient(client, clientId);
+};
+
 // PAGINATION:
 
 const search = ref('');
@@ -143,14 +150,15 @@ const pageCount = computed(() => {
         <v-btn icon="mdi-eye-outline" class="icon" variant="text" @click="goToProjects(item)" />
       </template>
       <template v-slot:item.actions="{ item }">
-        <div class="d-flex justify-start pl-0">
+        <div class="d-flex justify-start ga-6">
           <EditModal
-            :new-item="handleAddNewClient"
-            :client="item"
-            icon="mdi-pencil-outline"
-            title="Edit Client"
-            name="Modify the name to your client"
-            description="Modify the description to your client"
+            @new-item="handleEditClient($event, item.id)"
+            model-icon="mdi-pencil-outline"
+            model-title="Edit Client"
+            model-name="Modify the name to your client"
+            model-description="Modify the description to your client"
+            :name-to-be-edited="item.name"
+            :description-to-be-edited="item.description ?? ''"
           />
           <v-btn
             icon="mdi-delete-outline"
