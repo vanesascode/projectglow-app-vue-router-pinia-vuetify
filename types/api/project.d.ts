@@ -5,8 +5,8 @@ export interface Project {
   name: string;
   description?: string | null;
   isEnabled: boolean;
-  tasks: Task[];
-  progress: number;
+  tasks?: Task[];
+  progress?: number;
 }
 
 export interface ProjectState {
