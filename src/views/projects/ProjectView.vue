@@ -39,10 +39,9 @@ const headers: ReadonlyArray<{
   align: string;
   sortable?: boolean;
 }> = [
-  // TODO: ADD THE TOGGLER TO SET THE COMPLETED DATE
   {
-    key: 'id',
-    title: 'Id',
+    key: 'checkbox',
+    title: '',
     align: 'start',
   },
   {
@@ -57,7 +56,7 @@ const headers: ReadonlyArray<{
     sortable: false,
   },
   {
-    key: 'completed',
+    key: 'completedAt',
     title: 'Completed at',
     align: 'start',
     sortable: false,
@@ -85,6 +84,22 @@ const handleEditTask = (task: { name: string; description: string }, taskId: num
   tasksStore.editTheTask(task, taskId, projectIdNumber, clientIdNumber);
 };
 
+const editTheCompletedDate = (task: { completedAt: string | undefined | null }, taskId: number) => {
+  if (typeof task === 'string') {
+    task = { completedAt: task };
+  }
+  if (task === undefined) {
+    task = { completedAt: undefined };
+  }
+  if (!task || task.completedAt === undefined || task.completedAt === '') {
+    task = { completedAt: new Date().toLocaleDateString('en-US') };
+    tasksStore.editTheTask(task, taskId, projectIdNumber, clientIdNumber);
+  } else {
+    task = { completedAt: '' };
+    tasksStore.editTheTask(task, taskId, projectIdNumber, clientIdNumber);
+  }
+};
+
 // PAGINATION:
 
 const search = ref('');
@@ -104,7 +119,7 @@ const pageCount = computed(() => {
 
       <!-- Buscador por nombre -->
 
-      <!-- <v-text-field
+      <v-text-field
         v-model="search"
         density="compact"
         label="Search"
@@ -113,7 +128,7 @@ const pageCount = computed(() => {
         flat
         hide-details
         single-line
-      ></v-text-field> -->
+      ></v-text-field>
     </v-card-title>
 
     <v-divider></v-divider>
@@ -125,7 +140,7 @@ const pageCount = computed(() => {
       :items="tasks"
       :items-per-page="itemsPerPage"
     >
-      <template v-slot:top>
+      <!-- <template v-slot:top>
         <v-text-field
           :model-value="itemsPerPage"
           class="pa-2"
@@ -136,6 +151,15 @@ const pageCount = computed(() => {
           hide-details
           @update:model-value="itemsPerPage = parseInt($event, 10)"
         ></v-text-field>
+      </template> -->
+
+      <template v-slot:item.checkbox="{ item }">
+        <input
+          type="checkbox"
+          :checked="!!item.completedAt"
+          class="checkbox"
+          @change="editTheCompletedDate(item.completedAt, item.id)"
+        />
       </template>
 
       <template v-slot:item.actions="{ item }">
