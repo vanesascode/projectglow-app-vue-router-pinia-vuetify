@@ -33,7 +33,7 @@ const search = ref('');
 
 const page = ref(1);
 
-const itemsPerPage = ref(2);
+const itemsPerPage = ref(20);
 
 const pageCount = computed(() => {
   return Math.ceil(tasks.value.length / itemsPerPage.value);
@@ -77,6 +77,11 @@ const headers: ReadonlyArray<{
     sortable: false,
   },
 ];
+
+const handleAddNewTask = (task: { name: string; description: string }) => {
+  console.log(task, clientIdNumber, projectIdNumber);
+  tasksStore.addNewTask(task, clientIdNumber, projectIdNumber);
+};
 </script>
 
 <template>
@@ -88,7 +93,7 @@ const headers: ReadonlyArray<{
 
       <!-- Buscador por nombre -->
 
-      <v-text-field
+      <!-- <v-text-field
         v-model="search"
         density="compact"
         label="Search"
@@ -97,7 +102,7 @@ const headers: ReadonlyArray<{
         flat
         hide-details
         single-line
-      ></v-text-field>
+      ></v-text-field> -->
     </v-card-title>
 
     <v-divider></v-divider>
@@ -129,18 +134,18 @@ const headers: ReadonlyArray<{
 
       <!-- Pagination -->
 
-      <template v-slot:bottom>
+      <!-- <template v-slot:bottom>
         <div class="text-center pt-2">
           <v-pagination v-model="page" :length="pageCount"></v-pagination>
         </div>
-      </template>
+      </template> -->
     </v-data-table>
   </v-card>
 
   <!-- To add a new project -->
 
   <InputModal
-    @new-client="handleAddNewTask($event)"
+    @new-item="handleAddNewTask($event)"
     title="New Task"
     name="Add a name to your task"
     description="Add a description to your task"
