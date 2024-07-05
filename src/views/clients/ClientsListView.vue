@@ -4,6 +4,7 @@ import { computed, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Client } from 'types';
 import InputModal from '@/components/main/InputModal.vue';
+import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 import EditModal from '@/components/main/EditModal.vue';
 
 const router = useRouter();
@@ -106,7 +107,7 @@ const pageCount = computed(() => {
 <template>
   <v-card flat>
     <v-card-title class="d-flex align-center pe-2 mt-5">
-      Clients List
+      <BreadCrumbs />
 
       <v-spacer></v-spacer>
 
