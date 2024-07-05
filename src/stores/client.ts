@@ -33,7 +33,7 @@ export const useClientsStore = defineStore({
       }
     },
 
-    async addClient({
+    async addNewClient({
       name: nameValue,
       description: descriptionValue,
     }: {
