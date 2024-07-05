@@ -1,12 +1,14 @@
 <template>
-  <v-breadcrumbs :items="items"></v-breadcrumbs>
+  <v-breadcrumbs :items="items" divider=""></v-breadcrumbs>
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 
 interface Props {
-  name: string;
+  name?: string;
+  id?: number;
+  projectsPage?: boolean;
 }
 
 const props = defineProps<Props>();
@@ -24,12 +26,17 @@ watch(
   () => {
     items.value = [
       {
-        title: 'Projects',
+        title: 'Clients',
         disabled: false,
-        href: '/#/projects',
+        href: '/clients',
       },
       {
-        title: props.name,
+        title: props.id ? 'Projects' : '',
+        disabled: props.projectsPage ? true : false,
+        href: `/clients/${props.id}/projects`,
+      },
+      {
+        title: props.name ? props.name : '',
         disabled: true,
         href: '',
       },
