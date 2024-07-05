@@ -59,5 +59,18 @@ export const useClientsStore = defineStore({
         this.loading = false;
       }
     },
+
+    async editTheClient(client: { name: string; description: string }, clientId: number) {
+      this.loading = true;
+
+      try {
+        await clientService.editClient(client, clientId);
+        await this.getAllClients();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.loading = false;
+      }
+    },
   },
 });
