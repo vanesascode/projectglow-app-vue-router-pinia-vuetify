@@ -4,6 +4,7 @@ import { computed, onMounted, ref } from 'vue';
 import InputModal from '@/components/main/InputModal.vue';
 import EditModal from '@/components/main/EditModal.vue';
 import { Task } from 'types';
+import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 
 // GET TASKS:
 
@@ -113,7 +114,7 @@ const pageCount = computed(() => {
 <template>
   <v-card flat>
     <v-card-title class="d-flex align-center pe-2 mt-5">
-      Tasks List for project {{ props.projectId }}
+      <BreadCrumbs :name="'Tasks'" :id="clientIdNumber" />
 
       <v-spacer></v-spacer>
 
