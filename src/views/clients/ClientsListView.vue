@@ -70,18 +70,18 @@ const headers: ReadonlyArray<{
 
 const clients = computed(() => clientsStore.clients);
 
-const handleInputValue = () => {
-  console.log(name);
-  clientsStore.addClient({ name: 'whaterver', description: 'whaterver' });
-};
+// const handleInputValue = () => {
+//   console.log(name);
+//   clientsStore.addClient({ name: 'whaterver', description: 'whaterver' });
+// };
 
 const goToProjects = (client: Client): void => {
   const routeData = router.resolve({ name: 'ClientProjects', params: { clientId: client.id } });
   window.open(routeData.href, '_blank');
 };
 
-const handleAddNewClient = (data: any): void => {
-  clientsStore.addClient(data);
+const handleAddNewClient = (client: { name: string; description: string }): void => {
+  clientsStore.addNewClient(client);
 };
 
 // PAGINATION:
@@ -162,7 +162,7 @@ const pageCount = computed(() => {
   <!-- To add a new client -->
 
   <InputModal
-    @new-client="handleAddNewClient($event)"
+    @new-item="handleAddNewClient($event)"
     title="New Client"
     name="Add a name to your client"
     description="Add a description to your client"
