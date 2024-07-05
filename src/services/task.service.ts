@@ -27,6 +27,19 @@ class TaskService {
     );
     return response.data;
   };
+
+  editTask = async (
+    task: { name: string; description: string },
+    taskId: number,
+    projectId: number,
+    clientId: number,
+  ): Promise<Task> => {
+    const response = await httpClient.put(
+      `${baseUrl}/${clientId}/projects/${projectId}/tasks/${taskId}`,
+      task,
+    );
+    return response.data;
+  };
 }
 
 export default new TaskService();
