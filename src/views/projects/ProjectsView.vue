@@ -5,6 +5,8 @@ import InputModal from '@/components/main/InputModal.vue';
 import { Project } from 'types';
 import router from '@/router';
 
+// GET PROJECTS:
+
 const projectsStore = useProjectsStore();
 
 const props = defineProps<{
@@ -27,18 +29,6 @@ onMounted(async () => {
 });
 
 const projects = computed(() => projectsStore.projects);
-
-// PAGINATION:
-
-const search = ref('');
-
-const page = ref(1);
-
-const itemsPerPage = ref(20);
-
-const pageCount = computed(() => {
-  return Math.ceil(projects.value.length / itemsPerPage.value);
-});
 
 // TABLE:
 
@@ -83,6 +73,8 @@ const headers: ReadonlyArray<{
   },
 ];
 
+// TABLE METHODS:
+
 const goToTasks = (project: Project, clientIdNumber: number): void => {
   console.log('project', project);
   const routeData = router.resolve({
@@ -95,6 +87,19 @@ const goToTasks = (project: Project, clientIdNumber: number): void => {
 const handleAddNewProject = (project: { name: string; description: string }): void => {
   projectsStore.addNewProject(project, clientIdNumber);
 };
+
+const handleDeleteProject = (project: Project): void => {
+  projectsStore.deleteTheProject(project, clientIdNumber);
+};
+
+// PAGINATION:
+
+const search = ref('');
+const page = ref(1);
+const itemsPerPage = ref(20);
+const pageCount = computed(() => {
+  return Math.ceil(projects.value.length / itemsPerPage.value);
+});
 </script>
 
 <template>
@@ -158,8 +163,13 @@ const handleAddNewProject = (project: { name: string; description: string }): vo
         />
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-btn icon="mdi-pencil-outline" class="icon" variant="text" @click="goToClient(item)" />
-        <v-btn icon="mdi-delete-outline" class="icon" variant="text" @click="deleteClient(item)" />
+        <v-btn icon="mdi-pencil-outline" class="icon" variant="text" />
+        <v-btn
+          icon="mdi-delete-outline"
+          class="icon"
+          variant="text"
+          @click="handleDeleteProject(item)"
+        />
       </template>
 
       <!-- Pagination -->
