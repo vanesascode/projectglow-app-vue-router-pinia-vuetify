@@ -37,8 +37,21 @@ export const useProjectsStore = defineStore({
       this.loading = true;
 
       try {
-        const newProject = { ...project, isEnabled: true };
+        const newProject = { ...project, isEnabled: true, tasks: [] };
         await projectService.addProject(newProject, clientId);
+        await this.getAllProjects(clientId);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async deleteTheProject(project: Project, clientId: number) {
+      this.loading = true;
+
+      try {
+        await projectService.deleteProject(project, clientId);
         await this.getAllProjects(clientId);
       } catch (error) {
         console.error(error);
