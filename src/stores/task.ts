@@ -47,5 +47,18 @@ export const useTasksStore = defineStore({
         this.loading = false;
       }
     },
+
+    async deleteTheTask(task: Task, clientId: number, projectId: number) {
+      this.loading = true;
+
+      try {
+        await taskService.deleteTask(task, clientId, projectId);
+        await this.getAllTasks(clientId, projectId);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.loading = false;
+      }
+    },
   },
 });
