@@ -81,6 +81,10 @@ const handleDeleteTask = (task: Task) => {
   tasksStore.deleteTheTask(task, clientIdNumber, projectIdNumber);
 };
 
+const handleEditTask = (task: { name: string; description: string }, taskId: number): void => {
+  tasksStore.editTheTask(task, taskId, projectIdNumber, clientIdNumber);
+};
+
 // PAGINATION:
 
 const search = ref('');
@@ -135,14 +139,15 @@ const pageCount = computed(() => {
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <div class="d-flex justify-start pl-0">
+        <div class="d-flex justify-start ga-6">
           <EditModal
-            :new-item="handleAddNewTask"
-            :client="item"
-            icon="mdi-pencil-outline"
-            title="Edit Task"
-            name="Modify the name to your task"
-            description="Modify the description to your task"
+            @new-item="handleEditTask($event, item.id)"
+            model-icon="mdi-pencil-outline"
+            model-title="Edit Task"
+            model-name="Modify the name to your task"
+            model-description="Modify the description to your task"
+            :name-to-be-edited="item.name"
+            :description-to-be-edited="item.description ?? ''"
           />
           <v-btn
             icon="mdi-delete-outline"
