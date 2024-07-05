@@ -33,21 +33,12 @@ export const useClientsStore = defineStore({
       }
     },
 
-    async addNewClient({
-      name: nameValue,
-      description: descriptionValue,
-    }: {
-      name: string;
-      description: string;
-    }) {
+    async addNewClient(client: { name: string; description: string }) {
       this.loading = true;
 
       try {
-        await clientService.addClient({
-          name: nameValue,
-          description: descriptionValue,
-          isEnabled: true,
-        });
+        const newClient = { ...client, isEnabled: true, projects: [] };
+        await clientService.addClient(newClient);
         await this.getAllClients();
       } catch (error) {
         console.error(error);
@@ -56,7 +47,7 @@ export const useClientsStore = defineStore({
       }
     },
 
-    async deleteClient(client: Client) {
+    async deleteTheClient(client: Client) {
       this.loading = true;
 
       try {
