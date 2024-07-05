@@ -34,10 +34,9 @@ const search = ref('');
 
 const page = ref(1);
 
-const itemsPerPage = ref(2);
+const itemsPerPage = ref(20);
 
 const pageCount = computed(() => {
-  console.log('pageCount', Math.ceil(projects.value.length / itemsPerPage.value));
   return Math.ceil(projects.value.length / itemsPerPage.value);
 });
 
@@ -92,6 +91,10 @@ const goToTasks = (project: Project, clientIdNumber: number): void => {
   });
   window.open(routeData.href, '_blank');
 };
+
+const handleAddNewProject = (project: { name: string; description: string }): void => {
+  projectsStore.addNewProject(project, clientIdNumber);
+};
 </script>
 
 <template>
@@ -124,7 +127,7 @@ const goToTasks = (project: Project, clientIdNumber: number): void => {
       :items="projects"
       :items-per-page="itemsPerPage"
     >
-      <template v-slot:top>
+      <!-- <template v-slot:top>
         <v-text-field
           :model-value="itemsPerPage"
           class="pa-2"
@@ -135,7 +138,7 @@ const goToTasks = (project: Project, clientIdNumber: number): void => {
           hide-details
           @update:model-value="itemsPerPage = parseInt($event, 10)"
         ></v-text-field>
-      </template>
+      </template> -->
 
       <template v-slot:item.progress="{ item }">
         <v-progress-linear :model-value="item.progress" height="25" color="rgb(143, 43, 158)">
@@ -161,18 +164,18 @@ const goToTasks = (project: Project, clientIdNumber: number): void => {
 
       <!-- Pagination -->
 
-      <template v-slot:bottom>
+      <!-- <template v-slot:bottom>
         <div class="text-center pt-2">
           <v-pagination v-model="page" :length="pageCount"></v-pagination>
         </div>
-      </template>
+      </template> -->
     </v-data-table>
   </v-card>
 
   <!-- To add a new project -->
 
   <InputModal
-    @new-client="handleAddNewProject($event)"
+    @new-item="handleAddNewProject($event)"
     title="New Project"
     name="Add a name to your project"
     description="Add a description to your project"
