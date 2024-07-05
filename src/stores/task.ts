@@ -61,12 +61,7 @@ export const useTasksStore = defineStore({
       }
     },
 
-    async editTheTask(
-      task: { name: string; description: string },
-      taskId: number,
-      projectId: number,
-      clientId: number,
-    ) {
+    async editTheTask(task: any, taskId: number, projectId: number, clientId: number) {
       this.loading = true;
 
       try {
