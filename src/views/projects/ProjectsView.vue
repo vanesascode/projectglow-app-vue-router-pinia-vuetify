@@ -2,6 +2,7 @@
 import { useProjectsStore } from '@/stores';
 import { computed, onMounted, ref } from 'vue';
 import InputModal from '@/components/main/InputModal.vue';
+import EditModal from '@/components/main/EditModal.vue';
 import { Project } from 'types';
 import router from '@/router';
 
@@ -163,13 +164,22 @@ const pageCount = computed(() => {
         />
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-btn icon="mdi-pencil-outline" class="icon" variant="text" />
-        <v-btn
-          icon="mdi-delete-outline"
-          class="icon"
-          variant="text"
-          @click="handleDeleteProject(item)"
-        />
+        <div class="d-flex justify-start pl-0">
+          <EditModal
+            :new-item="handleAddNewProject"
+            :client="item"
+            icon="mdi-pencil-outline"
+            title="Edit Project"
+            name="Modify the name to your project"
+            description="Modify the description to your project"
+          />
+          <v-btn
+            icon="mdi-delete-outline"
+            class="icon"
+            variant="text"
+            @click="handleDeleteProject(item)"
+          />
+        </div>
       </template>
 
       <!-- Pagination -->
