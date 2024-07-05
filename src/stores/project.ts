@@ -59,5 +59,22 @@ export const useProjectsStore = defineStore({
         this.loading = false;
       }
     },
+
+    async editTheProject(
+      project: { name: string; description: string },
+      projectId: number,
+      clientId: number,
+    ) {
+      this.loading = true;
+
+      try {
+        await projectService.editProject(project, projectId, clientId);
+        await this.getAllProjects(clientId);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.loading = false;
+      }
+    },
   },
 });
