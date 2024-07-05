@@ -26,7 +26,7 @@ onUpdated(() => {
 });
 
 const emits = defineEmits<{
-  newClient: [{ name: string; description: string }];
+  newItem: [{ name: string; description: string }];
 }>();
 
 const submitValue = () => {
@@ -35,7 +35,7 @@ const submitValue = () => {
     return;
   }
 
-  emits('newClient', { name: nameValue.value.trim(), description: descriptionValue.value.trim() });
+  emits('newItem', { name: nameValue.value.trim(), description: descriptionValue.value.trim() });
 
   nameValue.value = '';
   descriptionValue.value = '';
