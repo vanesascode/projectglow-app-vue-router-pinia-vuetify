@@ -2,16 +2,18 @@
 import { onUpdated, ref } from 'vue';
 
 interface Props {
-  title: string;
-  name: string;
-  description: string;
-  icon: string;
+  modelTitle: string;
+  modelName: string;
+  modelDescription: string;
+  modelIcon: string;
+  nameToBeEdited: string;
+  descriptionToBeEdited: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
-const nameValue = ref('');
-const descriptionValue = ref('');
+const nameValue = ref(props.nameToBeEdited);
+const descriptionValue = ref(props.descriptionToBeEdited);
 const isModalOpen = ref(false);
 const inputRef = ref<HTMLInputElement | null>(null);
 
@@ -51,18 +53,18 @@ const closeModal = () => {
 
 <template>
   <v-dialog max-width="500" v-model="isModalOpen">
-    <v-card :title="title">
+    <v-card :title="modelTitle">
       <v-form @submit.prevent>
         <v-text-field
           id="nameInput"
           v-model="nameValue"
-          :label="name"
+          :label="modelName"
           ref="inputRef"
         ></v-text-field>
         <v-text-field
           id="DescriptionInput"
           v-model="descriptionValue"
-          :label="description"
+          :label="modelDescription"
         ></v-text-field>
 
         <v-card-actions>
@@ -78,7 +80,7 @@ const closeModal = () => {
 
   <v-fab
     class="hover-color"
-    :icon="icon"
+    :icon="modelIcon"
     variant="text"
     @click="
       isModalOpen = true;
