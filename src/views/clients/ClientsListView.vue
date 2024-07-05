@@ -6,6 +6,9 @@ import { Client } from 'types';
 import InputModal from '@/components/main/InputModal.vue';
 
 const router = useRouter();
+
+// GET CLIENTS:
+
 const clientsStore = useClientsStore();
 
 const listAllClients = async (): Promise<void> => {
@@ -16,14 +19,7 @@ onBeforeMount(() => {
   listAllClients();
 });
 
-const goToClient = (client: Client): void => {
-  const routeData = router.resolve({ name: 'Client', params: { clientName: client.name } });
-  window.open(routeData.href, '_blank');
-};
-
-const deleteClient = (client: Client): void => {
-  clientsStore.deleteClient(client);
-};
+const clients = computed(() => clientsStore.clients);
 
 // TABLE:
 
@@ -68,16 +64,20 @@ const headers: ReadonlyArray<{
   },
 ];
 
-const clients = computed(() => clientsStore.clients);
-
-// const handleInputValue = () => {
-//   console.log(name);
-//   clientsStore.addClient({ name: 'whaterver', description: 'whaterver' });
-// };
+// TABLE METHODS:
 
 const goToProjects = (client: Client): void => {
   const routeData = router.resolve({ name: 'ClientProjects', params: { clientId: client.id } });
   window.open(routeData.href, '_blank');
+};
+
+const goToClient = (client: Client): void => {
+  const routeData = router.resolve({ name: 'Client', params: { clientName: client.name } });
+  window.open(routeData.href, '_blank');
+};
+
+const handleDeleteClient = (client: Client): void => {
+  clientsStore.deleteTheClient(client);
 };
 
 const handleAddNewClient = (client: { name: string; description: string }): void => {
@@ -87,11 +87,8 @@ const handleAddNewClient = (client: { name: string; description: string }): void
 // PAGINATION:
 
 const search = ref('');
-
 const page = ref(1);
-
 const itemsPerPage = ref(2);
-
 const pageCount = computed(() => {
   console.log('pageCount', Math.ceil(clients.value.length / itemsPerPage.value));
   return Math.ceil(clients.value.length / itemsPerPage.value);
@@ -146,7 +143,12 @@ const pageCount = computed(() => {
       </template>
       <template v-slot:item.actions="{ item }">
         <v-btn icon="mdi-pencil-outline" class="icon" variant="text" @click="goToClient(item)" />
-        <v-btn icon="mdi-delete-outline" class="icon" variant="text" @click="deleteClient(item)" />
+        <v-btn
+          icon="mdi-delete-outline"
+          class="icon"
+          variant="text"
+          @click="handleDeleteClient(item)"
+        />
       </template>
 
       <!-- Pagination -->
