@@ -20,6 +20,15 @@ class ProjectService {
     const response = await httpClient.delete(`${baseUrl}/${clientId}/projects/${project.id}`);
     return response.data;
   };
+
+  editProject = async (
+    project: { name: string; description: string },
+    projectId: number,
+    clientId: number,
+  ): Promise<Project> => {
+    const response = await httpClient.put(`${baseUrl}/${clientId}/projects/${projectId}`, project);
+    return response.data;
+  };
 }
 
 export default new ProjectService();
