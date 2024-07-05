@@ -5,6 +5,7 @@ import InputModal from '@/components/main/InputModal.vue';
 import EditModal from '@/components/main/EditModal.vue';
 import { Project } from 'types';
 import router from '@/router';
+import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 
 // GET PROJECTS:
 
@@ -113,7 +114,7 @@ const pageCount = computed(() => {
 <template>
   <v-card flat>
     <v-card-title class="d-flex align-center pe-2 mt-5">
-      Projects List for {{ props.clientId }}
+      <BreadCrumbs :id="clientIdNumber" :projectsPage="true" />
 
       <v-spacer></v-spacer>
 
