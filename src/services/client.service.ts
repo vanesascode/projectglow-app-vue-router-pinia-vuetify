@@ -21,6 +21,14 @@ class ClientService {
     const response = await httpClient.delete(`${baseUrl}/${client.id}`);
     return response.data;
   };
+
+  editClient = async (
+    client: { name: string; description: string },
+    clientId: number,
+  ): Promise<Client> => {
+    const response = await httpClient.put(`${baseUrl}/${clientId}`, client);
+    return response.data;
+  };
 }
 
 export default new ClientService();
