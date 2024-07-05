@@ -2,6 +2,7 @@
 import { useTasksStore } from '@/stores';
 import { computed, onMounted, ref } from 'vue';
 import InputModal from '@/components/main/InputModal.vue';
+import EditModal from '@/components/main/EditModal.vue';
 import { Task } from 'types';
 
 // GET TASKS:
@@ -134,13 +135,22 @@ const pageCount = computed(() => {
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <v-btn icon="mdi-pencil-outline" class="icon" variant="text" @click="editTask(item)" />
-        <v-btn
-          icon="mdi-delete-outline"
-          class="icon"
-          variant="text"
-          @click="handleDeleteTask(item)"
-        />
+        <div class="d-flex justify-start pl-0">
+          <EditModal
+            :new-item="handleAddNewTask"
+            :client="item"
+            icon="mdi-pencil-outline"
+            title="Edit Task"
+            name="Modify the name to your task"
+            description="Modify the description to your task"
+          />
+          <v-btn
+            icon="mdi-delete-outline"
+            class="icon"
+            variant="text"
+            @click="handleDeleteTask(item)"
+          />
+        </div>
       </template>
 
       <!-- Pagination -->
