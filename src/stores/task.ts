@@ -60,5 +60,23 @@ export const useTasksStore = defineStore({
         this.loading = false;
       }
     },
+
+    async editTheTask(
+      task: { name: string; description: string },
+      taskId: number,
+      projectId: number,
+      clientId: number,
+    ) {
+      this.loading = true;
+
+      try {
+        await taskService.editTask(task, taskId, projectId, clientId);
+        await this.getAllTasks(clientId, projectId);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.loading = false;
+      }
+    },
   },
 });
