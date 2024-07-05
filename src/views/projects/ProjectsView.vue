@@ -93,6 +93,13 @@ const handleDeleteProject = (project: Project): void => {
   projectsStore.deleteTheProject(project, clientIdNumber);
 };
 
+const handleEditProject = (
+  project: { name: string; description: string },
+  projectId: number,
+): void => {
+  projectsStore.editTheProject(project, projectId, clientIdNumber);
+};
+
 // PAGINATION:
 
 const search = ref('');
@@ -164,14 +171,15 @@ const pageCount = computed(() => {
         />
       </template>
       <template v-slot:item.actions="{ item }">
-        <div class="d-flex justify-start pl-0">
+        <div class="d-flex justify-start ga-6">
           <EditModal
-            :new-item="handleAddNewProject"
-            :client="item"
-            icon="mdi-pencil-outline"
-            title="Edit Project"
-            name="Modify the name to your project"
-            description="Modify the description to your project"
+            @new-item="handleEditProject($event, item.id)"
+            model-icon="mdi-pencil-outline"
+            model-title="Edit Project"
+            model-name="Modify the name to your project"
+            model-description="Modify the description to your project"
+            :name-to-be-edited="item.name"
+            :description-to-be-edited="item.description ?? ''"
           />
           <v-btn
             icon="mdi-delete-outline"
