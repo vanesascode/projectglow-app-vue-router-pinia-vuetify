@@ -2,6 +2,9 @@
 import { useTasksStore } from '@/stores';
 import { computed, onMounted, ref } from 'vue';
 import InputModal from '@/components/main/InputModal.vue';
+import { Task } from 'types';
+
+// GET TASKS:
 
 const tasksStore = useTasksStore();
 
@@ -26,18 +29,6 @@ onMounted(async () => {
 });
 
 const tasks = computed(() => tasksStore.tasks);
-
-// PAGINATION:
-
-const search = ref('');
-
-const page = ref(1);
-
-const itemsPerPage = ref(20);
-
-const pageCount = computed(() => {
-  return Math.ceil(tasks.value.length / itemsPerPage.value);
-});
 
 // TABLE:
 
@@ -73,15 +64,30 @@ const headers: ReadonlyArray<{
   {
     key: 'actions',
     title: 'Actions',
-    align: 'start',
+    align: 'center',
     sortable: false,
   },
 ];
+
+// TABLE METHODS:
 
 const handleAddNewTask = (task: { name: string; description: string }) => {
   console.log(task, clientIdNumber, projectIdNumber);
   tasksStore.addNewTask(task, clientIdNumber, projectIdNumber);
 };
+
+const handleDeleteTask = (task: Task) => {
+  tasksStore.deleteTheTask(task, clientIdNumber, projectIdNumber);
+};
+
+// PAGINATION:
+
+const search = ref('');
+const page = ref(1);
+const itemsPerPage = ref(20);
+const pageCount = computed(() => {
+  return Math.ceil(tasks.value.length / itemsPerPage.value);
+});
 </script>
 
 <template>
@@ -129,7 +135,12 @@ const handleAddNewTask = (task: { name: string; description: string }) => {
 
       <template v-slot:item.actions="{ item }">
         <v-btn icon="mdi-pencil-outline" class="icon" variant="text" @click="editTask(item)" />
-        <v-btn icon="mdi-delete-outline" class="icon" variant="text" @click="deleteTask(item)" />
+        <v-btn
+          icon="mdi-delete-outline"
+          class="icon"
+          variant="text"
+          @click="handleDeleteTask(item)"
+        />
       </template>
 
       <!-- Pagination -->
