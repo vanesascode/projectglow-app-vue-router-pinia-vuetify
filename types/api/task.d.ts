@@ -6,7 +6,6 @@ export interface Task {
 }
 
 export interface TaskState {
-  // tasksWithCompletition: any[];
   tasks: Task[];
   task: Task;
   total: number;
