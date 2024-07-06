@@ -4,7 +4,6 @@ export interface Project {
   id: number;
   name: string;
   description?: string | null;
-  isEnabled: boolean;
   tasks?: Task[];
   progress?: number;
 }
