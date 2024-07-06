@@ -23,7 +23,7 @@ class ClientService {
   };
 
   editClient = async (
-    client: { name: string; description: string },
+    client: { name: string; description: string; isEnabled: boolean },
     clientId: number,
   ): Promise<Client> => {
     const response = await httpClient.put(`${baseUrl}/${clientId}`, client);
