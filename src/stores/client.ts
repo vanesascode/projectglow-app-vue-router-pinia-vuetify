@@ -60,7 +60,10 @@ export const useClientsStore = defineStore({
       }
     },
 
-    async editTheClient(client: { name: string; description: string }, clientId: number) {
+    async editTheClient(
+      client: { name: string; description: string; isEnabled: boolean },
+      clientId: number,
+    ) {
       this.loading = true;
 
       try {
