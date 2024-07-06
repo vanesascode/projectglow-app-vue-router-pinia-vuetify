@@ -8,10 +8,13 @@ interface Props {
   modelIcon: string;
   nameToBeEdited: string;
   descriptionToBeEdited: string;
+  isEnabledToBeEdited?: boolean;
+  clientsModal?: boolean;
 }
 
 const props = defineProps<Props>();
 
+const isEnabled = ref(props.isEnabledToBeEdited);
 const nameValue = ref(props.nameToBeEdited);
 const descriptionValue = ref(props.descriptionToBeEdited);
 const isModalOpen = ref(false);
@@ -28,7 +31,7 @@ onUpdated(() => {
 });
 
 const emits = defineEmits<{
-  newItem: [{ name: string; description: string }];
+  newItem: [{ name: string; description: string; isEnabled: boolean }];
 }>();
 
 const submitValue = () => {
@@ -37,16 +40,16 @@ const submitValue = () => {
     return;
   }
 
-  emits('newItem', { name: nameValue.value.trim(), description: descriptionValue.value.trim() });
+  emits('newItem', {
+    name: nameValue.value.trim(),
+    description: descriptionValue.value.trim(),
+    isEnabled: isEnabled.value,
+  });
 
-  nameValue.value = '';
-  descriptionValue.value = '';
   isModalOpen.value = false;
 };
 
 const closeModal = () => {
-  nameValue.value = '';
-  descriptionValue.value = '';
   isModalOpen.value = false;
 };
 </script>
@@ -61,11 +64,25 @@ const closeModal = () => {
           :label="modelName"
           ref="inputRef"
         ></v-text-field>
+
         <v-text-field
           id="DescriptionInput"
           v-model="descriptionValue"
           :label="modelDescription"
         ></v-text-field>
+
+        <div v-if="clientsModal" class="d-flex ga-3 align-center">
+          <input
+            type="checkbox"
+            id="active"
+            value="activation-checkbox"
+            class="checkbox"
+            :checked="isEnabledToBeEdited"
+            @change="isEnabled ? !isEnabled : isEnabled"
+            v-model="isEnabled"
+          />
+          <label for="active">Enable or disable client</label>
+        </div>
 
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -90,9 +107,18 @@ const closeModal = () => {
 </template>
 
 <style lang="scss">
+@import '@/assets/styles/main.scss';
+
 .hover-color {
   &:hover {
-    color: #299145;
+    color: $primary-color;
   }
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  accent-color: $primary-color;
+  margin-left: 1rem;
 }
 </style>
