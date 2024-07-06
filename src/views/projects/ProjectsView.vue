@@ -216,9 +216,11 @@ const pageCount = computed(() => {
 </template>
 
 <style lang="scss">
+@import '@/assets/styles/main.scss';
+
 .icon {
   &:hover {
-    color: #299145;
+    color: $primary-color;
   }
 }
 .v-data-table-header__content {
