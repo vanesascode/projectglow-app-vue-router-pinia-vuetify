@@ -7,8 +7,11 @@ import { ref, watch } from 'vue';
 
 interface Props {
   name?: string;
-  id?: number;
+  clientId?: string;
+  clientName?: string;
   projectsPage?: boolean;
+  projectId?: string;
+  projectName?: string;
 }
 
 const props = defineProps<Props>();
@@ -31,12 +34,12 @@ watch(
         href: '/clients',
       },
       {
-        title: props.id ? 'Projects' : '',
+        title: props.clientId ? `${props.clientName} Projects` : '',
         disabled: props.projectsPage ? true : false,
-        href: `/clients/${props.id}/projects`,
+        href: `/clients/${props.clientId}/${props.clientName}/projects`,
       },
       {
-        title: props.name ? props.name : '',
+        title: props.projectName ? `${props.projectName} Tasks` : '',
         disabled: true,
         href: '',
       },
