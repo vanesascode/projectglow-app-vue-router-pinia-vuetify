@@ -12,7 +12,9 @@ const tasksStore = useTasksStore();
 
 const props = defineProps<{
   clientId: string;
+  clientName: string;
   projectId: string;
+  projectName: string;
 }>();
 
 const listAllTasks = async (clientId: number, projectId: number): Promise<void> => {
@@ -114,7 +116,12 @@ const pageCount = computed(() => {
 <template>
   <v-card flat>
     <v-card-title class="d-flex align-center pe-2 mt-5">
-      <BreadCrumbs :name="'Tasks'" :id="clientIdNumber" />
+      <BreadCrumbs
+        :clientId="props.clientId"
+        :clientName="props.clientName"
+        :projectId="props.projectId"
+        :projectName="props.projectName"
+      />
 
       <v-spacer></v-spacer>
 
