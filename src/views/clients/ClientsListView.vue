@@ -69,14 +69,17 @@ const headers: ReadonlyArray<{
 // TABLE METHODS:
 
 const goToProjects = (client: Client): void => {
-  const routeData = router.resolve({ name: 'ClientProjects', params: { clientId: client.id } });
+  const routeData = router.resolve({
+    name: 'ClientProjects',
+    params: { clientId: client.id, clientName: client.name },
+  });
   window.open(routeData.href, '_blank');
 };
 
-const goToClient = (client: Client): void => {
-  const routeData = router.resolve({ name: 'Client', params: { clientName: client.name } });
-  window.open(routeData.href, '_blank');
-};
+// const goToClient = (client: Client): void => {
+//   const routeData = router.resolve({ name: 'Client', params: { clientName: client.name } });
+//   window.open(routeData.href, '_blank');
+// };
 
 const handleDeleteClient = (client: Client): void => {
   clientsStore.deleteTheClient(client);
