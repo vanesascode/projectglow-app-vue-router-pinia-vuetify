@@ -13,6 +13,7 @@ const projectsStore = useProjectsStore();
 
 const props = defineProps<{
   clientId: string;
+  clientName: string;
 }>();
 
 const listAllProjects = async (clientId: number): Promise<void> => {
@@ -27,7 +28,6 @@ onMounted(async () => {
   } catch (error) {
     console.error('Error in onMounted hook:', error);
   }
-  console.log(projects);
 });
 
 const projects = computed(() => projectsStore.projects);
@@ -78,10 +78,14 @@ const headers: ReadonlyArray<{
 // TABLE METHODS:
 
 const goToTasks = (project: Project, clientIdNumber: number): void => {
-  console.log('project', project);
   const routeData = router.resolve({
-    name: 'Project',
-    params: { clientId: clientIdNumber, projectId: project.id },
+    name: 'Tasks',
+    params: {
+      clientId: clientIdNumber,
+      clientName: props.clientName,
+      projectId: project.id,
+      projectName: project.name,
+    },
   });
   window.open(routeData.href, '_blank');
 };
@@ -114,7 +118,7 @@ const pageCount = computed(() => {
 <template>
   <v-card flat>
     <v-card-title class="d-flex align-center pe-2 mt-5">
-      <BreadCrumbs :id="clientIdNumber" :projectsPage="true" />
+      <BreadCrumbs :clientId="props.clientId" :projectsPage="true" :clientName="props.clientName" />
 
       <v-spacer></v-spacer>
 
