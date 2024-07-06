@@ -90,7 +90,7 @@ const handleAddNewClient = (client: { name: string; description: string }): void
 };
 
 const handleEditClient = (
-  client: { name: string; description: string },
+  client: { name: string; description: string; isEnabled: boolean },
   clientId: number,
 ): void => {
   clientsStore.editTheClient(client, clientId);
@@ -100,7 +100,7 @@ const handleEditClient = (
 
 const search = ref('');
 const page = ref(1);
-const itemsPerPage = ref(2);
+const itemsPerPage = ref(10);
 const pageCount = computed(() => {
   console.log('pageCount', Math.ceil(clients.value.length / itemsPerPage.value));
   return Math.ceil(clients.value.length / itemsPerPage.value);
@@ -137,7 +137,7 @@ const pageCount = computed(() => {
       :items="clients"
       :items-per-page="itemsPerPage"
     >
-      <template v-slot:top>
+      <!-- <template v-slot:top>
         <v-text-field
           :model-value="itemsPerPage"
           class="pa-2"
@@ -148,7 +148,7 @@ const pageCount = computed(() => {
           hide-details
           @update:model-value="itemsPerPage = parseInt($event, 10)"
         ></v-text-field>
-      </template>
+      </template> -->
 
       <template v-slot:item.projects="{ item }">
         <v-btn icon="mdi-eye-outline" class="icon" variant="text" @click="goToProjects(item)" />
@@ -163,6 +163,8 @@ const pageCount = computed(() => {
             model-description="Modify the description to your client"
             :name-to-be-edited="item.name"
             :description-to-be-edited="item.description ?? ''"
+            clientsModal
+            :is-enabled-to-be-edited="item.isEnabled"
           />
           <v-btn
             icon="mdi-delete-outline"
@@ -173,13 +175,11 @@ const pageCount = computed(() => {
         </div>
       </template>
 
-      <!-- Pagination -->
-
-      <template v-slot:bottom>
+      <!-- <template v-slot:bottom>
         <div class="text-center pt-2">
           <v-pagination v-model="page" :length="pageCount"></v-pagination>
         </div>
-      </template>
+      </template>  -->
     </v-data-table>
   </v-card>
 
@@ -194,9 +194,11 @@ const pageCount = computed(() => {
 </template>
 
 <style lang="scss">
+@import '@/assets/styles/main.scss';
+
 .icon {
   &:hover {
-    color: #299145;
+    color: $primary-color;
   }
 }
 .v-data-table-header__content {
