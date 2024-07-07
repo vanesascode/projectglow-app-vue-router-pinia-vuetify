@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useProjectsStore } from '@/stores';
 import { computed, onMounted, ref } from 'vue';
-import InputModal from '@/components/main/InputModal.vue';
-import EditModal from '@/components/main/EditModal.vue';
+import InputModal from '@/components/modals/InputModal.vue';
+import EditModal from '@/components/modals/EditModal.vue';
 import { Project } from 'types';
 import router from '@/router';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
