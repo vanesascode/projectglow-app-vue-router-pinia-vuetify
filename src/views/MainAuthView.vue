@@ -1,4 +1,7 @@
 <template>
-  <h1>Auth Layout</h1>
-  <RouterView />
+  <v-app class="rounded rounded-md">
+    <v-main class="" style="min-height: 300px">
+      <RouterView />
+    </v-main>
+  </v-app>
 </template>
