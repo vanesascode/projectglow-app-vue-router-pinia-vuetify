@@ -135,76 +135,78 @@ const editTheCompletedDate = (
 
 const search = ref('');
 const page = ref(1);
-const itemsPerPage = ref(20);
+const itemsPerPage = ref(10);
 </script>
 
 <template>
-  <v-card flat>
-    <v-card-title class="d-flex align-center pe-2 mt-5">
-      <BreadCrumbs
-        :clientId="props.clientId"
-        :clientName="props.clientName"
-        :projectId="props.projectId"
-        :projectName="props.projectName"
-      />
-
-      <v-spacer></v-spacer>
-
-      <!-- Search Bar -->
-
-      <v-text-field
-        v-model="search"
-        density="compact"
-        label="Search"
-        prepend-inner-icon="mdi-magnify"
-        variant="solo-filled"
-        flat
-        hide-details
-        single-line
-      ></v-text-field>
-    </v-card-title>
-
-    <v-divider></v-divider>
-
-    <v-data-table
-      v-model:page="page"
-      v-model:search="search"
-      :headers="headers"
-      :items="tasks"
-      :items-per-page="itemsPerPage"
-    >
-      <template v-slot:item.checkbox="{ item }">
-        <input
-          type="checkbox"
-          :checked="!!item.completedAt"
-          class="checkbox"
-          @change="editTheCompletedDate(item.completedAt, item.id)"
+  <div class="d-flex justify-center">
+    <v-card flat width="1200px">
+      <v-card-title class="d-flex align-center pe-2">
+        <BreadCrumbs
+          :clientId="props.clientId"
+          :clientName="props.clientName"
+          :projectId="props.projectId"
+          :projectName="props.projectName"
         />
-      </template>
 
-      <template v-slot:item.actions="{ item }">
-        <div class="d-flex justify-center align-center ga-15">
-          <div>
-            <EditModal
-              @new-item="handleEditTask($event, item.id)"
-              model-icon="mdi-pencil-outline"
-              model-title="Edit Task"
-              model-name="Modify the name to your task"
-              model-description="Modify the description to your task"
-              :name-to-be-edited="item.name"
-              :description-to-be-edited="item.description ?? ''"
+        <v-spacer></v-spacer>
+
+        <!-- Search Bar -->
+
+        <v-text-field
+          v-model="search"
+          density="compact"
+          label="Search"
+          prepend-inner-icon="mdi-magnify"
+          variant="solo-filled"
+          flat
+          hide-details
+          single-line
+        ></v-text-field>
+      </v-card-title>
+
+      <v-divider></v-divider>
+
+      <v-data-table
+        v-model:page="page"
+        v-model:search="search"
+        :headers="headers"
+        :items="tasks"
+        :items-per-page="itemsPerPage"
+      >
+        <template v-slot:item.checkbox="{ item }">
+          <input
+            type="checkbox"
+            :checked="!!item.completedAt"
+            class="checkbox"
+            @change="editTheCompletedDate(item.completedAt, item.id)"
+          />
+        </template>
+
+        <template v-slot:item.actions="{ item }">
+          <div class="d-flex justify-center align-center ga-15">
+            <div>
+              <EditModal
+                @new-item="handleEditTask($event, item.id)"
+                model-icon="mdi-pencil-outline"
+                model-title="Edit Task"
+                model-name="Modify the name to your task"
+                model-description="Modify the description to your task"
+                :name-to-be-edited="item.name"
+                :description-to-be-edited="item.description ?? ''"
+              />
+            </div>
+            <v-btn
+              icon="mdi-delete-outline"
+              class="icon"
+              variant="text"
+              @click="handleDeleteTask(item)"
             />
           </div>
-          <v-btn
-            icon="mdi-delete-outline"
-            class="icon"
-            variant="text"
-            @click="handleDeleteTask(item)"
-          />
-        </div>
-      </template>
-    </v-data-table>
-  </v-card>
+        </template>
+      </v-data-table>
+    </v-card>
+  </div>
 
   <!-- To add a new project -->
 
