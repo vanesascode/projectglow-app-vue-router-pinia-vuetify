@@ -5,7 +5,6 @@ import projectService from '@/services/project.service';
 const defaultProject: Project = {
   id: 0,
   name: '',
-  isEnabled: false,
   description: '',
   tasks: [],
   progress: 0,
