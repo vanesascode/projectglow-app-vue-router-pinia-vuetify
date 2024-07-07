@@ -52,23 +52,25 @@ const closeModal = () => {
 <template>
   <v-dialog max-width="500" v-model="isModalOpen">
     <v-card :title="title">
-      <v-form @submit.prevent>
+      <v-form @submit.prevent="submitValue">
         <v-text-field
           id="nameInput"
           v-model="nameValue"
           :label="name"
           ref="inputRef"
+          clearable
         ></v-text-field>
         <v-text-field
           id="DescriptionInput"
           v-model="descriptionValue"
           :label="description"
+          clearable
         ></v-text-field>
 
         <v-card-actions>
           <v-spacer></v-spacer>
           <div>
-            <v-btn type="submit" @click="submitValue">Save</v-btn>
+            <v-btn type="submit">Save</v-btn>
             <v-btn text="Close" @click="closeModal"></v-btn>
           </div>
         </v-card-actions>
