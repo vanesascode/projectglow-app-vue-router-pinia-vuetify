@@ -6,6 +6,7 @@ import EditModal from '@/components/main/EditModal.vue';
 import { Project } from 'types';
 import router from '@/router';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
+import { toastInterface, options as toastOptions } from '@/plugins/toastification';
 
 // GET PROJECTS:
 
@@ -91,18 +92,33 @@ const goToTasks = (project: Project, clientIdNumber: number): void => {
 };
 
 const handleAddNewProject = (project: { name: string; description: string }): void => {
-  projectsStore.addNewProject(project, clientIdNumber);
+  try {
+    projectsStore.addNewProject(project, clientIdNumber);
+    toastInterface.success('Project added successfully', toastOptions);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const handleDeleteProject = (project: Project): void => {
-  projectsStore.deleteTheProject(project, clientIdNumber);
+  try {
+    projectsStore.deleteTheProject(project, clientIdNumber);
+    toastInterface.success('Project deleted successfully', toastOptions);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const handleEditProject = (
   project: { name: string; description: string },
   projectId: number,
 ): void => {
-  projectsStore.editTheProject(project, projectId, clientIdNumber);
+  try {
+    projectsStore.editTheProject(project, projectId, clientIdNumber);
+    toastInterface.success('Project edited successfully', toastOptions);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // PAGINATION:
