@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores';
 
 const router = useRouter();
-
+const userStore = useUserStore();
 const visible = ref(false);
 const inputRef = ref<HTMLInputElement | null>(null);
-const nameValue = ref('');
+const userNameValue = ref('');
 const passwordValue = ref('mypassword');
 
 const focusInput = () => {
@@ -17,18 +18,13 @@ onMounted(() => {
   focusInput();
 });
 
-// const emits = defineEmits<{
-//   loginName: [ nameValue: string ];
-// }>();
-
 const submitValue = () => {
   try {
-    if (!nameValue.value) {
+    if (!userNameValue.value) {
       inputRef.value?.focus();
       return;
     }
-    console.log(nameValue.value);
-    // emits('loginName', nameValue.value.trim());
+    userStore.setUserName(userNameValue.value.trim());
     router.replace({ name: 'ClientsList' });
   } catch (error) {
     console.error(error);
@@ -53,7 +49,7 @@ const submitValue = () => {
         placeholder="Name"
         prepend-inner-icon="mdi-email-outline"
         variant="outlined"
-        v-model="nameValue"
+        v-model="userNameValue"
       ></v-text-field>
 
       <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
@@ -115,11 +111,11 @@ const submitValue = () => {
   width: 100%;
   height: 40px;
   border-radius: 4px;
-  background-color: #51ae4e63;
+  background-color: $dark-green;
   color: white;
   font-weight: bold;
   &:hover {
-    background-color: #438740;
+    background-color: $primary-color;
   }
 }
 </style>
