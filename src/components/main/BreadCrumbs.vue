@@ -1,5 +1,5 @@
 <template>
-  <v-breadcrumbs :items="items" divider=""></v-breadcrumbs>
+  <v-breadcrumbs :items="items" :divider="''" class="breadcrumbs-text"> </v-breadcrumbs>
 </template>
 
 <script setup lang="ts">
@@ -23,23 +23,24 @@ interface BreadcrumbItem {
 }
 
 const items = ref<BreadcrumbItem[]>([]);
+const showDivider = ref(false);
 
 watch(
   () => props.name,
   () => {
     items.value = [
       {
-        title: 'Clients',
+        title: 'Clients:',
         disabled: false,
         href: '/#clients',
       },
       {
-        title: props.clientId ? `${props.clientName} Projects` : '',
+        title: props.clientId ? `${props.clientName} Projects:` : '',
         disabled: props.projectsPage ? true : false,
         href: `/#clients/${props.clientId}/${props.clientName}/projects`,
       },
       {
-        title: props.projectName ? `${props.projectName} Tasks` : '',
+        title: props.projectName ? `${props.projectName} Tasks:` : '',
         disabled: true,
         href: '',
       },
@@ -50,3 +51,11 @@ watch(
   },
 );
 </script>
+
+<style lang="scss">
+@import '@/assets/styles/main.scss';
+
+.breadcrumbs-text {
+  color: $light-green !important;
+}
+</style>
