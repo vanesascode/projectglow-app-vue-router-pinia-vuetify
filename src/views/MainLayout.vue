@@ -10,5 +10,4 @@
       <RouterView />
     </v-main>
   </v-app>
-  <RouterView />
 </template>
