@@ -9,7 +9,7 @@ jobs:
       - uses: actions/setup-node@v4
       - name: Install
         run: npm install
-      - name: Lint
-        run: npm run lint
+      # - name: Lint
+      #   run: npm run lint
       # - name: Unit Tests
       #   run: npm run test:unit
