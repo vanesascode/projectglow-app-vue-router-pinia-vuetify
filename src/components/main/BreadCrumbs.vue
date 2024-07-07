@@ -31,12 +31,12 @@ watch(
       {
         title: 'Clients',
         disabled: false,
-        href: '/clients',
+        href: '/#clients',
       },
       {
         title: props.clientId ? `${props.clientName} Projects` : '',
         disabled: props.projectsPage ? true : false,
-        href: `/clients/${props.clientId}/${props.clientName}/projects`,
+        href: `/#clients/${props.clientId}/${props.clientName}/projects`,
       },
       {
         title: props.projectName ? `${props.projectName} Tasks` : '',
