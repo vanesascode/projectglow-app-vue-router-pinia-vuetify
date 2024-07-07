@@ -18,4 +18,10 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
   },
+  // rules: {
+  //   'import/no-commonjs': 'off',
+  // },
+  // parserOptions: {
+  //   sourceType: 'module',
+  // },
 };
