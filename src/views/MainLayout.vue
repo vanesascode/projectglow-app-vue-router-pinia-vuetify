@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import { useUserStore } from '@/stores';
+import { useRouter } from 'vue-router';
 
-const userStore = useUserStore();
+const user = localStorage.getItem('user');
+const router = useRouter();
+
+const logout = () => {
+  localStorage.removeItem('user');
+  router.push('/login');
+};
 </script>
 
 <template>
@@ -13,11 +19,10 @@ const userStore = useUserStore();
 
       <template v-slot:append>
         <v-app-bar-title class="text-grey d-none d-sm-block text-subtitle-1 mr-10">
-          Welcome back, {{ userStore.userName }}</v-app-bar-title
+          Welcome back, {{ user }}</v-app-bar-title
         >
-        <RouterLink to="/login">
-          <v-btn icon="mdi-logout" color="white"></v-btn>
-        </RouterLink>
+
+        <v-btn @click="logout" icon="mdi-logout" color="white"></v-btn>
       </template>
     </v-app-bar>
     <div class="spacer"></div>
