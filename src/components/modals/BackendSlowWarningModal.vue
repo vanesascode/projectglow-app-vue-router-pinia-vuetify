@@ -17,7 +17,7 @@ const closeModal = () => {
 
 <template>
   <v-dialog max-width="500" v-model="isModalOpen">
-    <v-card :title="title">
+    <v-card>
       <v-card-text class="text-subtitle-1">
         The backend is slow to respond. It's located on a free onRender server.
       </v-card-text>
