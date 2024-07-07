@@ -7,7 +7,7 @@ import authRoutes from './authRoutes';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // AUTH VIEW
+    // AUTH VIEWS
 
     {
       path: '/',
@@ -17,7 +17,7 @@ const router = createRouter({
       children: [...authRoutes],
     },
 
-    // CLIENTS VIEW
+    // CLIENTS VIEWS
 
     {
       path: '/clients',
@@ -26,7 +26,7 @@ const router = createRouter({
       children: [...clientRoutes],
     },
 
-    // PROJECTS VIEW
+    // PROJECTS & TASKS
 
     {
       path: '/clients/:clientId/:clientName/projects',
@@ -39,16 +39,13 @@ const router = createRouter({
           props: true,
           component: () => import('@/views/projects/ProjectsView.vue'),
         },
+        {
+          path: ':projectId/:projectName',
+          props: true,
+          name: 'Tasks',
+          component: () => import('@/views/projects/ProjectView.vue'),
+        },
       ],
-    },
-
-    // TASKS VIEW
-
-    {
-      path: '/clients/:clientId/:clientName/projects/:projectId/:projectName',
-      props: true,
-      name: 'Tasks',
-      component: () => import('@/views/projects/ProjectView.vue'),
     },
 
     // 404
