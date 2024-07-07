@@ -56,6 +56,20 @@ watch(
 @import '@/assets/styles/main.scss';
 
 .breadcrumbs-text {
-  color: $light-green !important;
+  color: $light-green;
+  font-size: 1.25rem;
+}
+
+@media screen and (max-width: 600px) {
+  .breadcrumbs-text {
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .breadcrumbs-text {
+    font-size: 1rem;
+    flex-wrap: wrap;
+  }
 }
 </style>
