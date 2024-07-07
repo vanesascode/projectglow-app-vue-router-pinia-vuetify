@@ -6,15 +6,12 @@ const routes: Array<RouteRecordRaw> = [
     name: 'ClientsList',
     component: () => import('@/views/clients/ClientsListView.vue'),
   },
+
+  // CLIENT PROFILE TO BE ADDED IN THE FUTURE
   {
     path: ':clientName',
     name: 'Client',
     component: () => import('@/views/clients/ClientProfileView.vue'),
-  },
-  {
-    path: ':clientName/edit',
-    name: 'EditClient',
-    component: () => import('@/views/clients/ClientEditView.vue'),
   },
 ];
 
