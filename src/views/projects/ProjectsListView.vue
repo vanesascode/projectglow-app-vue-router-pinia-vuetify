@@ -133,27 +133,29 @@ const itemsPerPage = ref(10);
 <template>
   <div class="d-flex justify-center">
     <v-card flat width="1200px">
-      <v-card-title class="d-flex align-center pe-2">
-        <BreadCrumbs
-          :clientId="props.clientId"
-          :projectsPage="true"
-          :clientName="props.clientName"
-        />
+      <v-card-title>
+        <div class="d-flex flex-column flex-sm-row align-sm-center justify-space-between">
+          <BreadCrumbs
+            :clientId="props.clientId"
+            :projectsPage="true"
+            :clientName="props.clientName"
+          />
 
-        <v-spacer></v-spacer>
+          <v-spacer></v-spacer>
 
-        <!-- Search Bar -->
+          <!-- Search Bar -->
 
-        <v-text-field
-          v-model="search"
-          density="compact"
-          label="Search"
-          prepend-inner-icon="mdi-magnify"
-          variant="solo-filled"
-          flat
-          hide-details
-          single-line
-        ></v-text-field>
+          <v-text-field
+            v-model="search"
+            density="compact"
+            label="Search"
+            prepend-inner-icon="mdi-magnify"
+            variant="solo-filled"
+            flat
+            hide-details
+            single-line
+          ></v-text-field>
+        </div>
       </v-card-title>
 
       <v-divider></v-divider>
