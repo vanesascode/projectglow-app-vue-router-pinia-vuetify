@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/valid-v-slot -->
 <script setup lang="ts">
 import { useClientsStore } from '@/stores';
 import { computed, onBeforeMount, ref } from 'vue';
@@ -19,53 +20,53 @@ const listAllClients = async (): Promise<void> => {
 };
 
 onBeforeMount(() => {
-  listAllClients();
+  try {
+    listAllClients();
+  } catch (error) {
+    console.error('Error in onBeforeMount hook:', error);
+  }
 });
 
 const clients = computed(() => clientsStore.clients);
 
 // TABLE:
 
-const headers: ReadonlyArray<{
-  key: string;
-  title: string;
-  align: string;
-  sortable?: boolean;
-}> = [
-  {
-    key: 'id',
-    title: 'Id',
-    align: 'start',
-  },
-  {
-    key: 'name',
-    title: 'Name',
-    align: 'start',
-  },
-  {
-    key: 'description',
-    title: 'Description',
-    align: 'start',
-    sortable: false,
-  },
-  {
-    key: 'isEnabled',
-    title: 'Active',
-    align: 'start',
-  },
-  {
-    key: 'projects',
-    title: 'Projects',
-    align: 'start',
-    sortable: false,
-  },
-  {
-    key: 'actions',
-    title: 'Actions',
-    align: 'start',
-    sortable: false,
-  },
-];
+const headers: any =
+  // ReadonlyArray<{ key: string; title: string; align: string; sortable?: boolean }>
+  [
+    {
+      key: 'id',
+      title: 'Id',
+      align: 'start',
+    },
+    {
+      key: 'name',
+      title: 'Name',
+      align: 'start',
+    },
+    {
+      key: 'description',
+      title: 'Description',
+      align: 'start',
+    },
+    {
+      key: 'isEnabled',
+      title: 'Active',
+      align: 'center',
+    },
+    {
+      key: 'projects',
+      title: 'Projects',
+      align: 'center',
+      sortable: false,
+    },
+    {
+      key: 'actions',
+      title: 'Actions',
+      align: 'center',
+      sortable: false,
+    },
+  ];
 
 // TABLE METHODS:
 
@@ -76,6 +77,8 @@ const goToProjects = (client: Client): void => {
   });
   window.open(routeData.href, '_blank');
 };
+
+// ROUTE FOR THE FUTURE:
 
 // const goToClient = (client: Client): void => {
 //   const routeData = router.resolve({ name: 'Client', params: { clientName: client.name } });
@@ -117,10 +120,6 @@ const handleEditClient = (
 const search = ref('');
 const page = ref(1);
 const itemsPerPage = ref(10);
-const pageCount = computed(() => {
-  console.log('pageCount', Math.ceil(clients.value.length / itemsPerPage.value));
-  return Math.ceil(clients.value.length / itemsPerPage.value);
-});
 </script>
 
 <template>
@@ -130,7 +129,7 @@ const pageCount = computed(() => {
 
       <v-spacer></v-spacer>
 
-      <!-- Buscador por nombre -->
+      <!-- Search -->
 
       <v-text-field
         v-model="search"
@@ -153,35 +152,30 @@ const pageCount = computed(() => {
       :items="clients"
       :items-per-page="itemsPerPage"
     >
-      <!-- <template v-slot:top>
-        <v-text-field
-          :model-value="itemsPerPage"
-          class="pa-2"
-          label="Items per page"
-          max="15"
-          min="-1"
-          type="number"
-          hide-details
-          @update:model-value="itemsPerPage = parseInt($event, 10)"
-        ></v-text-field>
-      </template> -->
+      <template v-slot:item.isEnabled="{ item }">
+        <v-icon v-if="item.isEnabled" icon="mdi-check" color="success" />
+        <v-icon v-else icon="mdi-cancel" color="red" />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </template>
 
       <template v-slot:item.projects="{ item }">
         <v-btn icon="mdi-eye-outline" class="icon" variant="text" @click="goToProjects(item)" />
       </template>
       <template v-slot:item.actions="{ item }">
-        <div class="d-flex justify-start ga-6">
-          <EditModal
-            @new-item="handleEditClient($event, item.id)"
-            model-icon="mdi-pencil-outline"
-            model-title="Edit Client"
-            model-name="Modify the name to your client"
-            model-description="Modify the description to your client"
-            :name-to-be-edited="item.name"
-            :description-to-be-edited="item.description ?? ''"
-            clientsModal
-            :is-enabled-to-be-edited="item.isEnabled"
-          />
+        <div class="d-flex justify-center align-center ga-15">
+          <div>
+            <EditModal
+              @new-item="handleEditClient($event, item.id)"
+              model-icon="mdi-pencil-outline"
+              model-title="Edit Client"
+              model-name="Modify the name to your client"
+              model-description="Modify the description to your client"
+              :name-to-be-edited="item.name"
+              :description-to-be-edited="item.description ?? ''"
+              clientsModal
+              :is-enabled-to-be-edited="item.isEnabled"
+            />
+          </div>
           <v-btn
             icon="mdi-delete-outline"
             class="icon"
@@ -190,12 +184,6 @@ const pageCount = computed(() => {
           />
         </div>
       </template>
-
-      <!-- <template v-slot:bottom>
-        <div class="text-center pt-2">
-          <v-pagination v-model="page" :length="pageCount"></v-pagination>
-        </div>
-      </template>  -->
     </v-data-table>
   </v-card>
 
