@@ -6,7 +6,7 @@ const defaultTask: Task = {
   id: 0,
   name: '',
   description: '',
-  completedAt: null,
+  completedAt: { completedAt: '' },
 };
 
 export const useTasksStore = defineStore({
