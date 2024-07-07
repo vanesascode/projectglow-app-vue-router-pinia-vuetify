@@ -1,6 +1,5 @@
-import MainClientsView from '@/views/MainClientsView.vue';
+import MainLayout from '@/views/MainLayout.vue';
 import MainAuthView from '@/views/MainAuthView.vue';
-import MainProjectsView from '@/views/MainProjectsView.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import clientRoutes from './clientRoutes';
 import authRoutes from './authRoutes';
@@ -18,19 +17,12 @@ const router = createRouter({
       children: [...authRoutes],
     },
 
-    // WECOME VIEW
-    {
-      path: '/welcome',
-      name: 'home',
-      component: () => import('@/views/auth/WelcomeView.vue'),
-    },
-
     // CLIENTS VIEW
 
     {
       path: '/clients',
       name: 'ClientsList',
-      component: MainClientsView,
+      component: MainLayout,
       children: [...clientRoutes],
     },
 
@@ -39,7 +31,7 @@ const router = createRouter({
     {
       path: '/clients/:clientId/:clientName/projects',
       name: 'ClientProjects',
-      component: MainProjectsView,
+      component: MainLayout,
       children: [
         {
           path: '',
@@ -51,6 +43,7 @@ const router = createRouter({
     },
 
     // TASKS VIEW
+
     {
       path: '/clients/:clientId/:clientName/projects/:projectId/:projectName',
       props: true,
