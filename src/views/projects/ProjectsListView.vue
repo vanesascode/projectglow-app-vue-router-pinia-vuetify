@@ -131,76 +131,81 @@ const itemsPerPage = ref(10);
 </script>
 
 <template>
-  <v-card flat>
-    <v-card-title class="d-flex align-center pe-2 mt-5">
-      <BreadCrumbs :clientId="props.clientId" :projectsPage="true" :clientName="props.clientName" />
-
-      <v-spacer></v-spacer>
-
-      <!-- Search Bar -->
-
-      <v-text-field
-        v-model="search"
-        density="compact"
-        label="Search"
-        prepend-inner-icon="mdi-magnify"
-        variant="solo-filled"
-        flat
-        hide-details
-        single-line
-      ></v-text-field>
-    </v-card-title>
-
-    <v-divider></v-divider>
-
-    <v-data-table
-      v-model:page="page"
-      v-model:search="search"
-      :headers="headers"
-      :items="projects"
-      :items-per-page="itemsPerPage"
-    >
-      <template v-slot:item.progress="{ item }">
-        <v-progress-linear :model-value="item.progress" height="25" color="#299145">
-          <strong v-if="item.tasks && item.tasks.length > 0">
-            {{ item.progress ? item.progress : '0' }}%</strong
-          >
-          <strong v-else>Add tasks</strong>
-        </v-progress-linear>
-      </template>
-
-      <template v-slot:item.tasks="{ item }">
-        <v-btn
-          icon="mdi-eye-outline"
-          class="icon"
-          variant="text"
-          @click="goToTasks(item, clientIdNumber)"
+  <div class="d-flex justify-center">
+    <v-card flat width="1200px">
+      <v-card-title class="d-flex align-center pe-2">
+        <BreadCrumbs
+          :clientId="props.clientId"
+          :projectsPage="true"
+          :clientName="props.clientName"
         />
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <div class="d-flex justify-center align-center ga-15">
-          <div>
-            <EditModal
-              @new-item="handleEditProject($event, item.id)"
-              model-icon="mdi-pencil-outline"
-              model-title="Edit Project"
-              model-name="Modify the name to your project"
-              model-description="Modify the description to your project"
-              :name-to-be-edited="item.name"
-              :description-to-be-edited="item.description ?? ''"
-            />
-          </div>
+
+        <v-spacer></v-spacer>
+
+        <!-- Search Bar -->
+
+        <v-text-field
+          v-model="search"
+          density="compact"
+          label="Search"
+          prepend-inner-icon="mdi-magnify"
+          variant="solo-filled"
+          flat
+          hide-details
+          single-line
+        ></v-text-field>
+      </v-card-title>
+
+      <v-divider></v-divider>
+
+      <v-data-table
+        v-model:page="page"
+        v-model:search="search"
+        :headers="headers"
+        :items="projects"
+        :items-per-page="itemsPerPage"
+      >
+        <template v-slot:item.progress="{ item }">
+          <v-progress-linear :model-value="item.progress" height="25" color="#299145">
+            <strong v-if="item.tasks && item.tasks.length > 0">
+              {{ item.progress ? item.progress : '0' }}%</strong
+            >
+            <strong v-else>Add tasks</strong>
+          </v-progress-linear>
+        </template>
+
+        <template v-slot:item.tasks="{ item }">
           <v-btn
-            icon="mdi-delete-outline"
+            icon="mdi-eye-outline"
             class="icon"
             variant="text"
-            @click="handleDeleteProject(item)"
+            @click="goToTasks(item, clientIdNumber)"
           />
-        </div>
-      </template>
-    </v-data-table>
-  </v-card>
-
+        </template>
+        <template v-slot:item.actions="{ item }">
+          <div class="d-flex justify-center align-center ga-15">
+            <div>
+              <EditModal
+                @new-item="handleEditProject($event, item.id)"
+                model-icon="mdi-pencil-outline"
+                model-title="Edit Project"
+                model-name="Modify the name to your project"
+                model-description="Modify the description to your project"
+                :name-to-be-edited="item.name"
+                :description-to-be-edited="item.description ?? ''"
+              />
+            </div>
+            <v-btn
+              icon="mdi-delete-outline"
+              class="icon"
+              variant="text"
+              @click="handleDeleteProject(item)"
+            />
+          </div>
+        </template>
+      </v-data-table>
+    </v-card>
+  </div>
   <!-- To add a new project -->
 
   <InputModal
