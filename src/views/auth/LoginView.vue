@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useUserStore } from '@/stores';
 
 const router = useRouter();
-const userStore = useUserStore();
 const visible = ref(false);
 const inputRef = ref<HTMLInputElement | null>(null);
 const userNameValue = ref('');
@@ -24,7 +22,7 @@ const submitValue = () => {
       inputRef.value?.focus();
       return;
     }
-    userStore.setUserName(userNameValue.value.trim());
+    localStorage.setItem('user', userNameValue.value.trim());
     router.replace({ name: 'ClientsList' });
   } catch (error) {
     console.error(error);
@@ -50,6 +48,7 @@ const submitValue = () => {
         prepend-inner-icon="mdi-email-outline"
         variant="outlined"
         v-model="userNameValue"
+        @keyup.enter="submitValue"
       ></v-text-field>
 
       <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
