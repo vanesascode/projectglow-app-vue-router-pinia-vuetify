@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useTasksStore } from '@/stores';
 import { computed, onMounted, ref } from 'vue';
-import InputModal from '@/components/main/InputModal.vue';
-import EditModal from '@/components/main/EditModal.vue';
+import InputModal from '@/components/modals/InputModal.vue';
+import EditModal from '@/components/modals/EditModal.vue';
 import { Task } from 'types';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 import { toastInterface, options as toastOptions } from '@/plugins/toastification';
