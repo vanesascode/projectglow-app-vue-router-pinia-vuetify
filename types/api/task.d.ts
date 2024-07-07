@@ -2,7 +2,7 @@ export interface Task {
   id: number;
   name: string;
   description?: string | null;
-  completedAt?: string | undefined | null;
+  completedAt?: { completedAt: string | Date | null | undefined };
 }
 
 export interface TaskState {
