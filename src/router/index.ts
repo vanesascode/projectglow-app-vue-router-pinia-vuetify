@@ -1,11 +1,11 @@
 import MainLayout from '@/views/MainLayout.vue';
 import MainAuthView from '@/views/MainAuthView.vue';
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import clientRoutes from './clientRoutes';
 import authRoutes from './authRoutes';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     // AUTH VIEWS
 
