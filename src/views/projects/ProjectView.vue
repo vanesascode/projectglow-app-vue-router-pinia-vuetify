@@ -5,6 +5,7 @@ import InputModal from '@/components/main/InputModal.vue';
 import EditModal from '@/components/main/EditModal.vue';
 import { Task } from 'types';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
+import { toastInterface, options as toastOptions } from '@/plugins/toastification';
 
 // GET TASKS:
 
@@ -75,31 +76,51 @@ const headers: ReadonlyArray<{
 // TABLE METHODS:
 
 const handleAddNewTask = (task: { name: string; description: string }) => {
-  console.log(task, clientIdNumber, projectIdNumber);
-  tasksStore.addNewTask(task, clientIdNumber, projectIdNumber);
+  try {
+    tasksStore.addNewTask(task, clientIdNumber, projectIdNumber);
+    toastInterface.success('Task added successfully', toastOptions);
+  } catch (error) {
+    console.error('Error in handleAddNewTask:', error);
+  }
 };
 
 const handleDeleteTask = (task: Task) => {
-  tasksStore.deleteTheTask(task, clientIdNumber, projectIdNumber);
+  try {
+    tasksStore.deleteTheTask(task, clientIdNumber, projectIdNumber);
+    toastInterface.success('Task deleted successfully', toastOptions);
+  } catch (error) {
+    console.error('Error in handleDeleteTask:', error);
+  }
 };
 
 const handleEditTask = (task: { name: string; description: string }, taskId: number): void => {
-  tasksStore.editTheTask(task, taskId, projectIdNumber, clientIdNumber);
+  try {
+    tasksStore.editTheTask(task, taskId, projectIdNumber, clientIdNumber);
+    toastInterface.success('Task edited successfully', toastOptions);
+  } catch (error) {
+    console.error('Error in handleEditTask:', error);
+  }
 };
 
 const editTheCompletedDate = (task: { completedAt: string | undefined | null }, taskId: number) => {
-  if (typeof task === 'string') {
-    task = { completedAt: task };
-  }
-  if (task === undefined) {
-    task = { completedAt: undefined };
-  }
-  if (!task || task.completedAt === undefined || task.completedAt === '') {
-    task = { completedAt: new Date().toLocaleDateString('en-US') };
-    tasksStore.editTheTask(task, taskId, projectIdNumber, clientIdNumber);
-  } else {
-    task = { completedAt: '' };
-    tasksStore.editTheTask(task, taskId, projectIdNumber, clientIdNumber);
+  try {
+    if (typeof task === 'string') {
+      task = { completedAt: task };
+    }
+    if (task === undefined) {
+      task = { completedAt: undefined };
+    }
+    if (!task || task.completedAt === undefined || task.completedAt === '') {
+      task = { completedAt: new Date().toLocaleDateString('en-US') };
+      tasksStore.editTheTask(task, taskId, projectIdNumber, clientIdNumber);
+      toastInterface.success('Finish date added successfully', toastOptions);
+    } else {
+      task = { completedAt: '' };
+      tasksStore.editTheTask(task, taskId, projectIdNumber, clientIdNumber);
+      toastInterface.error('Careful: Finish date removed', toastOptions);
+    }
+  } catch (error) {
+    console.error('Error in editTheCompletedDate:', error);
   }
 };
 
