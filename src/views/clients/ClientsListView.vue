@@ -6,6 +6,7 @@ import { Client } from 'types';
 import InputModal from '@/components/main/InputModal.vue';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 import EditModal from '@/components/main/EditModal.vue';
+import { toastInterface, options as toastOptions } from '@/plugins/toastification';
 
 const router = useRouter();
 
@@ -82,18 +83,33 @@ const goToProjects = (client: Client): void => {
 // };
 
 const handleDeleteClient = (client: Client): void => {
-  clientsStore.deleteTheClient(client);
+  try {
+    clientsStore.deleteTheClient(client);
+    toastInterface.success('Client deleted successfully', toastOptions);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const handleAddNewClient = (client: { name: string; description: string }): void => {
-  clientsStore.addNewClient(client);
+  try {
+    clientsStore.addNewClient(client);
+    toastInterface.success('New client added successfully', toastOptions);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const handleEditClient = (
   client: { name: string; description: string; isEnabled: boolean },
   clientId: number,
 ): void => {
-  clientsStore.editTheClient(client, clientId);
+  try {
+    clientsStore.editTheClient(client, clientId);
+    toastInterface.success('Client edited successfully', toastOptions);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // PAGINATION:
