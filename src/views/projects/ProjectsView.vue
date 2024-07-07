@@ -35,46 +35,48 @@ const projects = computed(() => projectsStore.projects);
 
 // TABLE:
 
-const headers: ReadonlyArray<{
-  key: string;
-  title: string;
-  align: string;
-  sortable?: boolean;
-}> = [
-  {
-    key: 'id',
-    title: 'Id',
-    align: 'start',
-  },
-  {
-    key: 'name',
-    title: 'Name',
-    align: 'start',
-  },
-  {
-    key: 'description',
-    title: 'Description',
-    align: 'start',
-    sortable: false,
-  },
-  {
-    key: 'progress',
-    title: 'Progress',
-    align: 'start',
-  },
-  {
-    key: 'tasks',
-    title: 'Tasks',
-    align: 'start',
-    sortable: false,
-  },
-  {
-    key: 'actions',
-    title: 'Actions',
-    align: 'start',
-    sortable: false,
-  },
-];
+const headers: any =
+  // ReadonlyArray<{
+  //   key: string;
+  //   title: string;
+  //   align: string;
+  //   sortable?: boolean;
+  // }>
+  [
+    {
+      key: 'id',
+      title: 'Id',
+      align: 'start',
+    },
+    {
+      key: 'name',
+      title: 'Name',
+      align: 'start',
+    },
+    {
+      key: 'description',
+      title: 'Description',
+      align: 'start',
+      sortable: false,
+    },
+    {
+      key: 'progress',
+      title: 'Progress',
+      align: 'start',
+    },
+    {
+      key: 'tasks',
+      title: 'Tasks',
+      align: 'start',
+      sortable: false,
+    },
+    {
+      key: 'actions',
+      title: 'Actions',
+      align: 'center',
+      sortable: false,
+    },
+  ];
 
 // TABLE METHODS:
 
@@ -125,10 +127,7 @@ const handleEditProject = (
 
 const search = ref('');
 const page = ref(1);
-const itemsPerPage = ref(20);
-const pageCount = computed(() => {
-  return Math.ceil(projects.value.length / itemsPerPage.value);
-});
+const itemsPerPage = ref(10);
 </script>
 
 <template>
@@ -138,7 +137,7 @@ const pageCount = computed(() => {
 
       <v-spacer></v-spacer>
 
-      <!-- Buscador por nombre -->
+      <!-- Search Bar -->
 
       <v-text-field
         v-model="search"
@@ -161,21 +160,8 @@ const pageCount = computed(() => {
       :items="projects"
       :items-per-page="itemsPerPage"
     >
-      <!-- <template v-slot:top>
-        <v-text-field
-          :model-value="itemsPerPage"
-          class="pa-2"
-          label="Items per page"
-          max="15"
-          min="-1"
-          type="number"
-          hide-details
-          @update:model-value="itemsPerPage = parseInt($event, 10)"
-        ></v-text-field>
-      </template> -->
-
       <template v-slot:item.progress="{ item }">
-        <v-progress-linear :model-value="item.progress" height="25" color="rgb(143, 43, 158)">
+        <v-progress-linear :model-value="item.progress" height="25" color="#299145">
           <strong v-if="item.tasks && item.tasks.length > 0">
             {{ item.progress ? item.progress : '0' }}%</strong
           >
@@ -192,16 +178,18 @@ const pageCount = computed(() => {
         />
       </template>
       <template v-slot:item.actions="{ item }">
-        <div class="d-flex justify-start ga-6">
-          <EditModal
-            @new-item="handleEditProject($event, item.id)"
-            model-icon="mdi-pencil-outline"
-            model-title="Edit Project"
-            model-name="Modify the name to your project"
-            model-description="Modify the description to your project"
-            :name-to-be-edited="item.name"
-            :description-to-be-edited="item.description ?? ''"
-          />
+        <div class="d-flex justify-center align-center ga-15">
+          <div>
+            <EditModal
+              @new-item="handleEditProject($event, item.id)"
+              model-icon="mdi-pencil-outline"
+              model-title="Edit Project"
+              model-name="Modify the name to your project"
+              model-description="Modify the description to your project"
+              :name-to-be-edited="item.name"
+              :description-to-be-edited="item.description ?? ''"
+            />
+          </div>
           <v-btn
             icon="mdi-delete-outline"
             class="icon"
@@ -210,14 +198,6 @@ const pageCount = computed(() => {
           />
         </div>
       </template>
-
-      <!-- Pagination -->
-
-      <!-- <template v-slot:bottom>
-        <div class="text-center pt-2">
-          <v-pagination v-model="page" :length="pageCount"></v-pagination>
-        </div>
-      </template> -->
     </v-data-table>
   </v-card>
 
