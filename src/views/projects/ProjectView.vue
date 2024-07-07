@@ -37,41 +37,43 @@ const tasks = computed(() => tasksStore.tasks);
 
 // TABLE:
 
-const headers: ReadonlyArray<{
-  key: string;
-  title: string;
-  align: string;
-  sortable?: boolean;
-}> = [
-  {
-    key: 'checkbox',
-    title: '',
-    align: 'start',
-  },
-  {
-    key: 'name',
-    title: 'Name',
-    align: 'start',
-  },
-  {
-    key: 'description',
-    title: 'Description',
-    align: 'start',
-    sortable: false,
-  },
-  {
-    key: 'completedAt',
-    title: 'Completed at',
-    align: 'start',
-    sortable: false,
-  },
-  {
-    key: 'actions',
-    title: 'Actions',
-    align: 'center',
-    sortable: false,
-  },
-];
+const headers: any =
+  // ReadonlyArray<{
+  //   key: string;
+  //   title: string;
+  //   align: string;
+  //   sortable?: boolean;
+  // }>
+  [
+    {
+      key: 'checkbox',
+      title: '',
+      align: 'start',
+    },
+    {
+      key: 'name',
+      title: 'Name',
+      align: 'start',
+    },
+    {
+      key: 'description',
+      title: 'Description',
+      align: 'start',
+      sortable: false,
+    },
+    {
+      key: 'completedAt',
+      title: 'Completed at',
+      align: 'start',
+      sortable: false,
+    },
+    {
+      key: 'actions',
+      title: 'Actions',
+      align: 'center',
+      sortable: false,
+    },
+  ];
 
 // TABLE METHODS:
 
@@ -102,7 +104,10 @@ const handleEditTask = (task: { name: string; description: string }, taskId: num
   }
 };
 
-const editTheCompletedDate = (task: { completedAt: string | undefined | null }, taskId: number) => {
+const editTheCompletedDate = (
+  task: { completedAt: string | Date | undefined | null } | string | undefined,
+  taskId: number,
+) => {
   try {
     if (typeof task === 'string') {
       task = { completedAt: task };
@@ -111,7 +116,9 @@ const editTheCompletedDate = (task: { completedAt: string | undefined | null }, 
       task = { completedAt: undefined };
     }
     if (!task || task.completedAt === undefined || task.completedAt === '') {
-      task = { completedAt: new Date().toLocaleDateString('en-US') };
+      task = {
+        completedAt: new Date().toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' }),
+      };
       tasksStore.editTheTask(task, taskId, projectIdNumber, clientIdNumber);
       toastInterface.success('Finish date added successfully', toastOptions);
     } else {
@@ -129,9 +136,6 @@ const editTheCompletedDate = (task: { completedAt: string | undefined | null }, 
 const search = ref('');
 const page = ref(1);
 const itemsPerPage = ref(20);
-const pageCount = computed(() => {
-  return Math.ceil(tasks.value.length / itemsPerPage.value);
-});
 </script>
 
 <template>
@@ -146,7 +150,7 @@ const pageCount = computed(() => {
 
       <v-spacer></v-spacer>
 
-      <!-- Buscador por nombre -->
+      <!-- Search Bar -->
 
       <v-text-field
         v-model="search"
@@ -169,19 +173,6 @@ const pageCount = computed(() => {
       :items="tasks"
       :items-per-page="itemsPerPage"
     >
-      <!-- <template v-slot:top>
-        <v-text-field
-          :model-value="itemsPerPage"
-          class="pa-2"
-          label="Items per page"
-          max="15"
-          min="-1"
-          type="number"
-          hide-details
-          @update:model-value="itemsPerPage = parseInt($event, 10)"
-        ></v-text-field>
-      </template> -->
-
       <template v-slot:item.checkbox="{ item }">
         <input
           type="checkbox"
@@ -192,16 +183,18 @@ const pageCount = computed(() => {
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <div class="d-flex justify-start ga-6">
-          <EditModal
-            @new-item="handleEditTask($event, item.id)"
-            model-icon="mdi-pencil-outline"
-            model-title="Edit Task"
-            model-name="Modify the name to your task"
-            model-description="Modify the description to your task"
-            :name-to-be-edited="item.name"
-            :description-to-be-edited="item.description ?? ''"
-          />
+        <div class="d-flex justify-center align-center ga-15">
+          <div>
+            <EditModal
+              @new-item="handleEditTask($event, item.id)"
+              model-icon="mdi-pencil-outline"
+              model-title="Edit Task"
+              model-name="Modify the name to your task"
+              model-description="Modify the description to your task"
+              :name-to-be-edited="item.name"
+              :description-to-be-edited="item.description ?? ''"
+            />
+          </div>
           <v-btn
             icon="mdi-delete-outline"
             class="icon"
@@ -210,14 +203,6 @@ const pageCount = computed(() => {
           />
         </div>
       </template>
-
-      <!-- Pagination -->
-
-      <!-- <template v-slot:bottom>
-        <div class="text-center pt-2">
-          <v-pagination v-model="page" :length="pageCount"></v-pagination>
-        </div>
-      </template> -->
     </v-data-table>
   </v-card>
 
