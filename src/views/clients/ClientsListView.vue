@@ -4,9 +4,10 @@ import { useClientsStore } from '@/stores';
 import { computed, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Client } from 'types';
-import InputModal from '@/components/main/InputModal.vue';
+import InputModal from '@/components/modals/InputModal.vue';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
-import EditModal from '@/components/main/EditModal.vue';
+import EditModal from '@/components/modals/EditModal.vue';
+import BackendSlowWarningModal from '@/components/modals/BackendSlowWarningModal.vue';
 import { toastInterface, options as toastOptions } from '@/plugins/toastification';
 
 const router = useRouter();
@@ -123,6 +124,7 @@ const itemsPerPage = ref(10);
 </script>
 
 <template>
+  <BackendSlowWarningModal />
   <div class="d-flex justify-center">
     <v-card flat width="1200px">
       <v-card-title class="d-flex align-center pe-2">
