@@ -24,10 +24,9 @@ export const useTasksStore = defineStore({
       try {
         const response = await taskService.getTasks(clientId, projectId);
         this.tasks = response ? response : [];
+        this.loading = false;
       } catch (error) {
         console.error(error);
-      } finally {
-        this.loading = false;
       }
     },
 
@@ -41,10 +40,9 @@ export const useTasksStore = defineStore({
       try {
         await taskService.addTask(task, clientId, projectId);
         await this.getAllTasks(clientId, projectId);
+        this.loading = false;
       } catch (error) {
         console.error(error);
-      } finally {
-        this.loading = false;
       }
     },
 
@@ -54,10 +52,9 @@ export const useTasksStore = defineStore({
       try {
         await taskService.deleteTask(task, clientId, projectId);
         await this.getAllTasks(clientId, projectId);
+        this.loading = false;
       } catch (error) {
         console.error(error);
-      } finally {
-        this.loading = false;
       }
     },
 
@@ -67,10 +64,9 @@ export const useTasksStore = defineStore({
       try {
         await taskService.editTask(task, taskId, projectId, clientId);
         await this.getAllTasks(clientId, projectId);
+        this.loading = false;
       } catch (error) {
         console.error(error);
-      } finally {
-        this.loading = false;
       }
     },
   },
