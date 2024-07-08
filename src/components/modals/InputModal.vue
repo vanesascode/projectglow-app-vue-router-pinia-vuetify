@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import FloatingButton from '@/components/main/FloatingButton.vue';
 import { onUpdated, ref } from 'vue';
+import { useI18n } from 'vue-i18n'
+
+
+const { t } = useI18n()
 
 interface Props {
   title: string;
@@ -70,8 +74,8 @@ const closeModal = () => {
         <v-card-actions>
           <v-spacer></v-spacer>
           <div>
-            <v-btn type="submit">Save</v-btn>
-            <v-btn text="Close" @click="closeModal"></v-btn>
+            <v-btn type="submit">{{ $t('modal.save') }}</v-btn>
+            <v-btn type="text" @click="closeModal">{{ $t('modal.close') }}</v-btn>
           </div>
         </v-card-actions>
       </v-form>
