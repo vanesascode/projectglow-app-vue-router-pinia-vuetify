@@ -26,10 +26,9 @@ export const useClientsStore = defineStore({
       try {
         const response = await clientService.getClients();
         this.clients = response ? response : [];
+        this.loading = false;
       } catch (error) {
         console.error(error);
-      } finally {
-        this.loading = false;
       }
     },
 
@@ -40,10 +39,9 @@ export const useClientsStore = defineStore({
         const newClient = { ...client, isEnabled: true, projects: [] };
         await clientService.addClient(newClient);
         await this.getAllClients();
+        this.loading = false;
       } catch (error) {
         console.error(error);
-      } finally {
-        this.loading = false;
       }
     },
 
@@ -53,10 +51,9 @@ export const useClientsStore = defineStore({
       try {
         await clientService.deleteClient(client);
         await this.getAllClients();
+        this.loading = false;
       } catch (error) {
         console.error(error);
-      } finally {
-        this.loading = false;
       }
     },
 
@@ -69,10 +66,9 @@ export const useClientsStore = defineStore({
       try {
         await clientService.editClient(client, clientId);
         await this.getAllClients();
+        this.loading = false;
       } catch (error) {
         console.error(error);
-      } finally {
-        this.loading = false;
       }
     },
   },
