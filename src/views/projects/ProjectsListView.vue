@@ -230,9 +230,9 @@ const itemsPerPage = ref(10);
               <EditModal
                 @new-item="handleEditProject($event, item.id)"
                 model-icon="mdi-pencil-outline"
-                model-title="Edit Project"
-                model-name="Modify the name to your project"
-                model-description="Modify the description to your project"
+                :model-title="$t('modal.edit-project')"
+                :model-name="$t('modal.modify-name-project')"
+                :model-description="$t('modal.modify-description-project')"
                 :name-to-be-edited="item.name"
                 :description-to-be-edited="item.description ?? ''"
               />
@@ -253,8 +253,8 @@ const itemsPerPage = ref(10);
 
   <InputModal
     @new-item="handleAddNewProject($event)"
-    title="New Project"
-    name="Add a name to your project"
-    description="Add a description to your project"
+    :title="$t('modal.new-project')"
+    :name="$t('modal.project-name')"
+    :description="$t('modal.project-description')"
   />
 </template>
