@@ -1,13 +1,17 @@
 <script setup lang="ts">
-import FloatingButton from '@/components/main/FloatingButton.vue';
 import { onMounted, ref } from 'vue';
 
 const isModalOpen = ref(false);
 
-onMounted(() => {
-  setTimeout(() => {
-    isModalOpen.value = true;
-  }, 1000);
+onMounted(async () => {
+  const hasShownBackendWarning = localStorage.getItem('hasShownBackendWarning');
+  if (!hasShownBackendWarning) {
+    setTimeout(() => {
+      isModalOpen.value = true;
+    }, 1000);
+
+    localStorage.setItem('hasShownBackendWarning', 'true');
+  }
 });
 
 const closeModal = () => {
