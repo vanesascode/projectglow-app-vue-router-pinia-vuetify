@@ -31,16 +31,14 @@ const submitValue = () => {
 </script>
 
 <template>
-  <div>
-    <v-img
-      class="mx-auto py-6 mt-10"
-      max-width="100"
-      src="https://i.postimg.cc/d3Q5mhbJ/logo.png"
-    ></v-img>
+  <div class="d-flex flex-column align-center">
+    <img class="mx-auto py-6 mt-10 logo w-25" src="@/assets/images/login-logo.png"></img>
 
     <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
       <div class="text-subtitle-1 text-medium-emphasis">Name</div>
 
+
+      
       <v-text-field
         ref="inputRef"
         density="compact"
@@ -117,4 +115,6 @@ const submitValue = () => {
     background-color: $primary-color;
   }
 }
+
+
 </style>
