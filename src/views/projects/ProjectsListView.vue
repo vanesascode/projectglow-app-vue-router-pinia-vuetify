@@ -49,14 +49,12 @@ const projects = computed(() => projectsStore.projects);
 
 // TABLE HEADERS:
 
-const headers: any =
-  // ReadonlyArray<{
-  //   key: string;
-  //   title: string;
-  //   align: string;
-  //   sortable?: boolean;
-  // }>
-  [
+const headers: ReadonlyArray<{
+  readonly key?: (string & {})
+  readonly title?: string | undefined;
+  readonly align?: 'center' | 'end' | 'start' | undefined;
+  readonly sortable?: boolean;
+}> = [
     {
       key: 'id',
       title: 'Id',
