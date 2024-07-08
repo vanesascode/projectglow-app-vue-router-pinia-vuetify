@@ -158,7 +158,7 @@ const itemsPerPage = ref(10);
     <v-skeleton-loader :elevation="14" type="table-tbody"></v-skeleton-loader>
   </div>
 
-  <!-- Clients table -->
+  <!-- Projects table -->
 
   <div class="d-flex justify-center" v-if="projectsStore.loading === false">
     <v-card flat width="1200px">
