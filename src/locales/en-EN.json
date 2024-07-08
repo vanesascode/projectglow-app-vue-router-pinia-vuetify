@@ -19,7 +19,8 @@
     "active": "Active",
     "projects": "Projects",
     "actions": "Actions",
-    "items-per-page": "Items per page:"
+    "items-per-page": "Items per page:",
+     "search": "Search"
   },
   "navbar": {
     "welcome": "Welcome back, "
