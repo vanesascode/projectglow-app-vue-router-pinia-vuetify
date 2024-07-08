@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n'
 
+
+const { t } = useI18n()
 const router = useRouter();
 const visible = ref(false);
 const inputRef = ref<HTMLInputElement | null>(null);
@@ -28,19 +31,33 @@ const submitValue = () => {
     console.error(error);
   }
 };
+
+const changeLocale = (locale: string) => {
+  if (locale === 'es-ES') {
+    localStorage.setItem('language', 'en-EN');
+  } else {
+    localStorage.setItem('language', 'es-ES');
+  }
+  window.location.reload();
+};
 </script>
 
 <template>
   <div class="d-flex flex-column align-center">
     <img class="mx-auto py-6 logo" src="@/assets/images/login-logo.png"></img>
+ 
 
     <v-card class="mx-auto pa-8 pb-8" elevation="8" max-width="430" rounded="lg">
-      <div class="text-subtitle-1 text-medium-emphasis">Name</div>
+      <div class="d-flex justify-end ga-4 language-box">
+      <button @click="changeLocale('en-EN')">ES</button>
+      <button @click="changeLocale('es-ES')">EN</button>
+    </div>
+      <div class="text-subtitle-1 text-medium-emphasis">{{ $t('login.name') }}</div>
 
       <v-text-field
         ref="inputRef"
         density="compact"
-        placeholder="Name"
+        :placeholder="$t('login.enter-name')"
         prepend-inner-icon="mdi-email-outline"
         variant="outlined"
         v-model="userNameValue"
@@ -48,7 +65,7 @@ const submitValue = () => {
       ></v-text-field>
 
       <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-        Password
+        {{ $t('login.password') }}
 
         <a
           class="text-caption text-decoration-none text-blue"
@@ -56,7 +73,7 @@ const submitValue = () => {
           rel="noopener noreferrer"
           target="_blank"
         >
-          Forgot login password?</a
+        {{ $t('login.forgot-password') }}</a
         >
       </div>
 
@@ -65,20 +82,20 @@ const submitValue = () => {
         :append-inner-icon="visible ? 'mdi-eye' : 'mdi-eye-off'"
         :type="visible ? 'text' : 'password'"
         density="compact"
-        placeholder="Enter your password"
+        :placeholder="$t('login.enter-password')"
         prepend-inner-icon="mdi-lock-outline"
         variant="outlined"
         @click:append-inner="visible = !visible"
       ></v-text-field>
 
       <v-card class="mb-10" color="surface-variant" variant="tonal">
-        <v-card-text class="text-medium-emphasis text-caption">
-          After 3 consecutive failed login attempts, you account will be temporarily locked for
-          three hours. 
+       
+        <v-card-text class="text-medium-emphasis text-caption  d-flex align-start ga-2">
+         {{ $t('login.warning') }}
         </v-card-text>
       </v-card>
 
-      <button class="login-button" @click="submitValue">Log In</button>
+      <button class="login-button" @click="submitValue">{{ $t('login.login') }}</button>
     </v-card>
   </div>
 </template>
@@ -95,11 +112,11 @@ const submitValue = () => {
   font-weight: lighter;
 }
 
-.v-card-text::before {
-  content: 'Warning: ';
-  color: rgb(183, 62, 62);
-  font-weight: bold;
-}
+// .v-card-text::before {
+//   content: '!!! ';
+//   color: rgb(183, 62, 62);
+//   font-weight: bolder;
+// }
 
 .login-button {
   width: 100%;
@@ -130,6 +147,22 @@ const submitValue = () => {
     height: 5rem;
     margin-top: 0rem;
   }
+}
+
+.language-box {
+  margin-bottom: 1rem;
+  cursor: pointer;
+  button {
+    &:hover {
+    color: $primary-color;
+  }
+  }
+}
+
+.v-card-text::before {
+  content: '!!! ';
+  color: rgb(183, 62, 62);
+  font-weight: bold;
 }
 
 </style>
