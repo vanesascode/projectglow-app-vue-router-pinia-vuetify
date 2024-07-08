@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import FloatingButton from '@/components/main/FloatingButton.vue';
 import { onUpdated, ref } from 'vue';
-import { useI18n } from 'vue-i18n'
-
-
-const { t } = useI18n()
 
 interface Props {
   title: string;
