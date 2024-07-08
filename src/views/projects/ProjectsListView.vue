@@ -133,29 +133,32 @@ const itemsPerPage = ref(10);
 <template>
   <!-- Skeleton loader -->
 
-  <div v-if="projectsStore.loading === true">
-    <v-card flat width="1200px" class="hidden">
-      <v-card-title class="d-flex align-center pe-2">
-        <BreadCrumbs
-          :clientId="props.clientId"
-          :projectsPage="true"
-          :clientName="props.clientName"
-        />
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          density="compact"
-          label="Search"
-          prepend-inner-icon="mdi-magnify"
-          variant="solo-filled"
-          flat
-          hide-details
-          single-line
-        ></v-text-field>
-      </v-card-title>
-    </v-card>
-    <v-skeleton-loader :elevation="14" type="table-thead"></v-skeleton-loader>
-    <v-skeleton-loader :elevation="14" type="table-tbody"></v-skeleton-loader>
+  <div class="d-flex justify-center align-center flex-column" v-if="projectsStore.loading === true">
+    <div>
+      <v-card flat width="1200px" class="hidden">
+        <v-card-title class="d-flex align-center pe-2">
+          <BreadCrumbs
+            :clientId="props.clientId"
+            :projectsPage="true"
+            :clientName="props.clientName"
+          />
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            density="compact"
+            label="Search"
+            prepend-inner-icon="mdi-magnify"
+            variant="solo-filled"
+            flat
+            hide-details
+            single-line
+          ></v-text-field>
+        </v-card-title>
+      </v-card>
+
+      <v-skeleton-loader :elevation="14" type="table-thead"></v-skeleton-loader>
+      <v-skeleton-loader :elevation="14" type="table-tbody"></v-skeleton-loader>
+    </div>
   </div>
 
   <!-- Projects table -->
