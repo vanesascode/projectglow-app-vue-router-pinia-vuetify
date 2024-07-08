@@ -29,16 +29,6 @@ onBeforeMount(async () => {
   } catch (error) {
     console.error('Error in onBeforeMount hook:', error);
   }
-
-  const tableItemsPerPageText = document.querySelector('.v-data-table-footer__items-per-page span');
-   if (tableItemsPerPageText) {
-   tableItemsPerPageText.textContent = t('clients-table.items-per-page');
- }
-
-  const tableSearchText = document.querySelector('.v-field-label');
-  if (tableSearchText) {
-    tableSearchText.textContent = t('clients-table.search');
-  }
 });
 
 const clients = computed(() => clientsStore.clients);
@@ -147,13 +137,12 @@ const itemsPerPage = ref(10);
           <v-text-field
             v-model="search"
             density="compact"
-          
+            :label="$t('clients-table.search')"
             prepend-inner-icon="mdi-magnify"
             variant="solo-filled"
             flat
             hide-details
             single-line
-            :placeholder="$t('clients-table.search')"
           ></v-text-field>
         </v-card-title>
       </v-card>
@@ -175,7 +164,7 @@ const itemsPerPage = ref(10);
         <v-text-field
           v-model="search"
           density="compact"
-          label="Search"
+          :label="$t('clients-table.search')"
           prepend-inner-icon="mdi-magnify"
           variant="solo-filled"
           flat
