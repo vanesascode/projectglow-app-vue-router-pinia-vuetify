@@ -44,7 +44,7 @@ const changeLocale = (locale: string) => {
 
 <template>
   <div class="d-flex flex-column align-center">
-    <img class="mx-auto py-6 logo" src="@/assets/images/login-logo.png"></img>
+  <img class="mx-auto py-6 logo" src="@/assets/images/login-logo.png"/>
  
 
     <v-card class="mx-auto pa-8 pb-8" elevation="8" max-width="430" rounded="lg">
