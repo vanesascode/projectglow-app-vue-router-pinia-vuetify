@@ -45,8 +45,12 @@ const clients = computed(() => clientsStore.clients);
 
 // TABLE HEADERS:
 
-const headers: any =
-  [
+const headers: ReadonlyArray<{
+  readonly key?: (string & {})
+  readonly title?: string | undefined;
+  readonly align?: 'center' | 'end' | 'start' | undefined;
+  readonly sortable?: boolean;
+}> = [
     {
       key: 'id',
       title: 'Id',
