@@ -1,7 +1,6 @@
 import MainLayout from '@/views/MainLayout.vue';
 import MainAuthView from '@/views/MainAuthView.vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
-import clientRoutes from './clientRoutes';
 import authRoutes from './authRoutes';
 
 const router = createRouter({
@@ -23,7 +22,13 @@ const router = createRouter({
       path: '/clients',
       name: 'ClientsList',
       component: MainLayout,
-      children: [...clientRoutes],
+      children: [
+        {
+          path: '',
+          name: 'ClientsList',
+          component: () => import('@/views/clients/ClientsListView.vue'),
+        },
+      ],
     },
 
     // PROJECTS & TASKS
