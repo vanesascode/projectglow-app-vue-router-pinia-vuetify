@@ -231,9 +231,9 @@ const itemsPerPage = ref(10);
               <EditModal
                 @new-item="handleEditTask($event, item.id)"
                 model-icon="mdi-pencil-outline"
-                model-title="Edit Task"
-                model-name="Modify the name to your task"
-                model-description="Modify the description to your task"
+                :model-title="$t('modal.edit-task')"
+                :model-name="$t('modal.modify-name-task')"
+                :model-description="$t('modal.modify-description-task')"
                 :name-to-be-edited="item.name"
                 :description-to-be-edited="item.description ?? ''"
               />
@@ -250,12 +250,12 @@ const itemsPerPage = ref(10);
     </v-card>
   </div>
 
-  <!-- To add a new project -->
+  <!-- To add a new task -->
 
   <InputModal
     @new-item="handleAddNewTask($event)"
-    title="New Task"
-    name="Add a name to your task"
-    description="Add a description to your task"
+    :title="$t('modal.new-task')"
+    :name="$t('modal.task-name')"
+    :description="$t('modal.task-description')"
   />
 </template>
