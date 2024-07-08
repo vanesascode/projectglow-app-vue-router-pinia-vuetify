@@ -135,13 +135,9 @@ const itemsPerPage = ref(10);
 
   <div class="d-flex justify-center align-center flex-column" v-if="projectsStore.loading === true">
     <div>
-      <v-card flat width="1200px" class="hidden">
+      <v-card flat class="table-skeleton-width">
         <v-card-title class="d-flex align-center pe-2">
-          <BreadCrumbs
-            :clientId="props.clientId"
-            :projectsPage="true"
-            :clientName="props.clientName"
-          />
+          <BreadCrumbs />
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"
@@ -248,17 +244,3 @@ const itemsPerPage = ref(10);
     description="Add a description to your project"
   />
 </template>
-
-<style lang="scss">
-@import '@/assets/styles/main.scss';
-
-.icon {
-  &:hover {
-    color: $primary-color;
-  }
-}
-.v-data-table-header__content {
-  font-weight: bolder;
-  font-size: 1rem;
-}
-</style>
