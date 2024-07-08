@@ -46,7 +46,6 @@ const clients = computed(() => clientsStore.clients);
 // TABLE HEADERS:
 
 const headers: any =
-  // ReadonlyArray<{ key: string; title: string; align: string; sortable?: boolean }>
   [
     {
       key: 'id',
@@ -190,15 +189,19 @@ const itemsPerPage = ref(10);
         :items="clients"
         :items-per-page="itemsPerPage"
       >
+        <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template v-slot:item.isEnabled="{ item }">
           <v-icon v-if="item.isEnabled" icon="mdi-check" color="success" />
           <v-icon v-else icon="mdi-cancel" color="red" />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </template>
 
+          <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template v-slot:item.projects="{ item }">
           <v-btn icon="mdi-eye-outline" class="icon" variant="text" @click="goToProjects(item)" />
         </template>
+        
+          <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template v-slot:item.actions="{ item }">
           <div class="d-flex justify-center align-center ga-15">
             <div>

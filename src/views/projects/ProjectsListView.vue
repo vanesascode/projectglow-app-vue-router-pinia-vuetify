@@ -207,6 +207,8 @@ const itemsPerPage = ref(10);
         :items="projects"
         :items-per-page="itemsPerPage"
       >
+      
+        <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template v-slot:item.progress="{ item }">
           <v-progress-linear :model-value="item.progress" height="25" color="#299145">
             <strong v-if="item.tasks && item.tasks.length > 0">
@@ -216,6 +218,7 @@ const itemsPerPage = ref(10);
           </v-progress-linear>
         </template>
 
+          <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template v-slot:item.tasks="{ item }">
           <v-btn
             icon="mdi-eye-outline"
@@ -224,6 +227,8 @@ const itemsPerPage = ref(10);
             @click="goToTasks(item, clientIdNumber)"
           />
         </template>
+
+          <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template v-slot:item.actions="{ item }">
           <div class="d-flex justify-center align-center ga-15">
             <div>

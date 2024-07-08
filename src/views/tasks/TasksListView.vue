@@ -216,6 +216,7 @@ const itemsPerPage = ref(10);
         :items="tasks"
         :items-per-page="itemsPerPage"
       >
+        <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template v-slot:item.checkbox="{ item }">
           <input
             type="checkbox"
@@ -225,6 +226,7 @@ const itemsPerPage = ref(10);
           />
         </template>
 
+          <!-- eslint-disable-next-line vue/valid-v-slot -->
         <template v-slot:item.actions="{ item }">
           <div class="d-flex justify-center align-center ga-15">
             <div>
