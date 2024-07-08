@@ -6,6 +6,10 @@ import EditModal from '@/components/modals/EditModal.vue';
 import { Task } from 'types';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 import { toastInterface, options as toastOptions } from '@/plugins/toastification';
+import { useI18n } from 'vue-i18n'
+
+
+const { t } = useI18n()
 
 const props = defineProps<{
   clientId: string;
@@ -31,6 +35,16 @@ onMounted(async () => {
   } catch (error) {
     console.error('Error in onMounted hook:', error);
   }
+
+  const tableItemsPerPageText = document.querySelector('.v-data-table-footer__items-per-page span');
+   if (tableItemsPerPageText) {
+   tableItemsPerPageText.textContent = t('clients-table.items-per-page');
+ }
+
+  const tableSearchText = document.querySelector('.v-field-label');
+  if (tableSearchText) {
+    tableSearchText.textContent = t('clients-table.search');
+  }
 });
 
 const tasks = computed(() => tasksStore.tasks);
@@ -52,24 +66,24 @@ const headers: any =
     },
     {
       key: 'name',
-      title: 'Name',
+      title: t('tasks-table.name'),
       align: 'start',
     },
     {
       key: 'description',
-      title: 'Description',
+      title: t('tasks-table.description'),
       align: 'start',
       sortable: false,
     },
     {
       key: 'completedAt',
-      title: 'Completed at',
+      title: t('tasks-table.completed-at'),
       align: 'start',
       sortable: false,
     },
     {
       key: 'actions',
-      title: 'Actions',
+      title: t('tasks-table.actions'),
       align: 'center',
       sortable: false,
     },
