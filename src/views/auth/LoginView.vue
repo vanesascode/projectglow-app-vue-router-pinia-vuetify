@@ -32,13 +32,11 @@ const submitValue = () => {
 
 <template>
   <div class="d-flex flex-column align-center">
-    <img class="mx-auto py-6 mt-10 logo w-25" src="@/assets/images/login-logo.png"></img>
+    <img class="mx-auto py-6 logo" src="@/assets/images/login-logo.png"></img>
 
-    <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
+    <v-card class="mx-auto pa-8 pb-8" elevation="8" max-width="430" rounded="lg">
       <div class="text-subtitle-1 text-medium-emphasis">Name</div>
 
-
-      
       <v-text-field
         ref="inputRef"
         density="compact"
@@ -73,11 +71,10 @@ const submitValue = () => {
         @click:append-inner="visible = !visible"
       ></v-text-field>
 
-      <v-card class="mb-12" color="surface-variant" variant="tonal">
+      <v-card class="mb-10" color="surface-variant" variant="tonal">
         <v-card-text class="text-medium-emphasis text-caption">
           After 3 consecutive failed login attempts, you account will be temporarily locked for
-          three hours. If you must login now, you can also click "Forgot login password?" below to
-          reset the login password.
+          three hours. 
         </v-card-text>
       </v-card>
 
@@ -116,5 +113,23 @@ const submitValue = () => {
   }
 }
 
+.logo {
+  height: 7rem;
+  margin-top: 3rem;
+}
+
+@media screen and (max-width: 600px) {
+   .logo {
+    height: 6rem;
+    margin-top: 1rem;
+   }
+}
+
+@media screen and (max-width: 400px) {
+  .logo {
+    height: 5rem;
+    margin-top: 0rem;
+  }
+}
 
 </style>
