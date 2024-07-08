@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const isModalOpen = ref(false);
 
@@ -23,7 +26,8 @@ const closeModal = () => {
   <v-dialog max-width="500" v-model="isModalOpen">
     <v-card>
       <v-card-text class="text-subtitle-1">
-        The backend is slow to respond. It's located on a free onRender server.
+        <span class="text-red"> {{ $t('backend-warning.patient') }}</span>
+        {{ $t('backend-warning.reason') }}
       </v-card-text>
 
       <v-card-actions>
@@ -36,10 +40,3 @@ const closeModal = () => {
   </v-dialog>
 </template>
 
-<style lang="scss">
-.v-card-text::before {
-  content: 'Please be patient: ';
-  color: rgb(183, 62, 62);
-  font-weight: bold;
-}
-</style>
