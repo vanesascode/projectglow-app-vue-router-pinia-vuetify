@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/valid-v-slot -->
 <script setup lang="ts">
 import { useClientsStore } from '@/stores';
 import { computed, onBeforeMount, ref } from 'vue';
@@ -20,9 +19,9 @@ const listAllClients = async (): Promise<void> => {
   await clientsStore.getAllClients();
 };
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   try {
-    listAllClients();
+    await listAllClients();
   } catch (error) {
     console.error('Error in onBeforeMount hook:', error);
   }
@@ -30,7 +29,7 @@ onBeforeMount(() => {
 
 const clients = computed(() => clientsStore.clients);
 
-// TABLE:
+// TABLE HEADERS:
 
 const headers: any =
   // ReadonlyArray<{ key: string; title: string; align: string; sortable?: boolean }>
@@ -79,13 +78,6 @@ const goToProjects = (client: Client): void => {
   window.open(routeData.href, '_blank');
 };
 
-// ROUTE FOR THE FUTURE:
-
-// const goToClient = (client: Client): void => {
-//   const routeData = router.resolve({ name: 'Client', params: { clientName: client.name } });
-//   window.open(routeData.href, '_blank');
-// };
-
 const handleDeleteClient = (client: Client): void => {
   try {
     clientsStore.deleteTheClient(client);
@@ -125,14 +117,38 @@ const itemsPerPage = ref(10);
 
 <template>
   <BackendSlowWarningModal />
-  <div class="d-flex justify-center">
+
+  <!-- Skeleton loader -->
+
+  <div v-if="clientsStore.loading === true">
+    <v-card flat width="1200px" class="hidden">
+      <v-card-title class="d-flex align-center pe-2">
+        <BreadCrumbs />
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          density="compact"
+          label="Search"
+          prepend-inner-icon="mdi-magnify"
+          variant="solo-filled"
+          flat
+          hide-details
+          single-line
+        ></v-text-field>
+      </v-card-title>
+    </v-card>
+    <v-skeleton-loader :elevation="14" type="table-thead"></v-skeleton-loader>
+    <v-skeleton-loader :elevation="14" type="table-tbody"></v-skeleton-loader>
+  </div>
+
+  <!-- Clients table -->
+
+  <div class="d-flex justify-center" v-if="clientsStore.loading === false">
     <v-card flat width="1200px">
       <v-card-title class="d-flex align-center pe-2">
         <BreadCrumbs />
 
         <v-spacer></v-spacer>
-
-        <!-- Search -->
 
         <v-text-field
           v-model="search"
