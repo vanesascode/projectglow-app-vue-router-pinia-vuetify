@@ -26,7 +26,7 @@ const closeModal = () => {
   <v-dialog max-width="500" v-model="isModalOpen">
     <v-card>
       <v-card-text class="text-subtitle-1">
-        <span class="text-red"> {{ $t('backend-warning.patient') }}</span>
+        <span class="text-red font-weight-bold"> {{ $t('backend-warning.patient') }}</span>
         {{ $t('backend-warning.reason') }}
       </v-card-text>
 
