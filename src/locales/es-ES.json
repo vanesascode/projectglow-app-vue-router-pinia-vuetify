@@ -37,5 +37,9 @@
     "description": "Descripción",
     "completed-at": "Completada el",
     "actions": "Acciones"
+  },
+  "backend-warning" : {
+    "patient": "Por favor sea paciente.",
+    "reason": "The backend is slow to respond. It's located on a free onRender server."
   }
 }
