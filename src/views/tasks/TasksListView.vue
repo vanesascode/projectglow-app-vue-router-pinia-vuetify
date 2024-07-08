@@ -141,30 +141,33 @@ const itemsPerPage = ref(10);
 <template>
   <!-- Skeleton loader -->
 
-  <div v-if="tasksStore.loading === true">
-    <v-card flat width="1200px" class="hidden">
-      <v-card-title class="d-flex align-center pe-2">
-        <BreadCrumbs
-          :clientId="props.clientId"
-          :clientName="props.clientName"
-          :projectId="props.projectId"
-          :projectName="props.projectName"
-        />
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          density="compact"
-          label="Search"
-          prepend-inner-icon="mdi-magnify"
-          variant="solo-filled"
-          flat
-          hide-details
-          single-line
-        ></v-text-field>
-      </v-card-title>
-    </v-card>
-    <v-skeleton-loader :elevation="14" type="table-thead"></v-skeleton-loader>
-    <v-skeleton-loader :elevation="14" type="table-tbody"></v-skeleton-loader>
+  <div v-if="tasksStore.loading === true" class="d-flex justify-center align-center flex-column">
+    <div>
+      <v-card flat width="1200px" class="hidden">
+        <v-card-title class="d-flex align-center pe-2">
+          <BreadCrumbs
+            :clientId="props.clientId"
+            :clientName="props.clientName"
+            :projectId="props.projectId"
+            :projectName="props.projectName"
+          />
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            density="compact"
+            label="Search"
+            prepend-inner-icon="mdi-magnify"
+            variant="solo-filled"
+            flat
+            hide-details
+            single-line
+          ></v-text-field>
+        </v-card-title>
+      </v-card>
+
+      <v-skeleton-loader :elevation="14" type="table-thead"></v-skeleton-loader>
+      <v-skeleton-loader :elevation="14" type="table-tbody"></v-skeleton-loader>
+    </div>
   </div>
 
   <!-- Tasks table -->
