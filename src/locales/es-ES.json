@@ -40,6 +40,6 @@
   },
   "backend-warning" : {
     "patient": "Por favor sea paciente.",
-    "reason": "The backend is slow to respond. It's located on a free onRender server."
+    "reason": "El backend tarda en responder. Está ubicado en un servidor onRender gratuito."
   }
 }
