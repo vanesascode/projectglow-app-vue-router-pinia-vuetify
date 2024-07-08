@@ -7,6 +7,10 @@ import { Project } from 'types';
 import router from '@/router';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 import { toastInterface, options as toastOptions } from '@/plugins/toastification';
+import { useI18n } from 'vue-i18n'
+
+
+const { t } = useI18n()
 
 const props = defineProps<{
   clientId: string;
@@ -29,6 +33,16 @@ onMounted(async () => {
   } catch (error) {
     console.error('Error in onMounted hook:', error);
   }
+
+  const tableItemsPerPageText = document.querySelector('.v-data-table-footer__items-per-page span');
+   if (tableItemsPerPageText) {
+   tableItemsPerPageText.textContent = t('clients-table.items-per-page');
+ }
+
+  const tableSearchText = document.querySelector('.v-field-label');
+  if (tableSearchText) {
+    tableSearchText.textContent = t('clients-table.search');
+  }
 });
 
 const projects = computed(() => projectsStore.projects);
@@ -50,29 +64,29 @@ const headers: any =
     },
     {
       key: 'name',
-      title: 'Name',
+      title: t('projects-table.name'),
       align: 'start',
     },
     {
       key: 'description',
-      title: 'Description',
+      title: t('projects-table.description'),
       align: 'start',
       sortable: false,
     },
     {
       key: 'progress',
-      title: 'Progress',
+      title: t('projects-table.progress'),
       align: 'start',
     },
     {
       key: 'tasks',
-      title: 'Tasks',
+      title: t('projects-table.tasks'),
       align: 'start',
       sortable: false,
     },
     {
       key: 'actions',
-      title: 'Actions',
+      title: t('projects-table.actions'),
       align: 'center',
       sortable: false,
     },
