@@ -41,5 +41,29 @@
   "backend-warning" : {
     "patient": "Por favor sea paciente.",
     "reason": "El backend tarda en responder. Está ubicado en un servidor onRender gratuito."
+  },
+  "modal" : {
+    "active-client": "Activa o desactiva el cliente",
+    "save": "Guardar",
+    "close": "Cerrar",
+    "new-client": "Nuevo Cliente",
+    "client-name": "Añade un nombre a tu cliente",
+    "client-description": "Añade una descripción a tu cliente",
+    "new-project": "Nuevo Proyecto",
+    "project-name": "Añade un nombre a tu proyecto",
+    "project-description": "Añade una descripción a tu proyecto",
+    "new-task": "Nueva Tarea",
+    "task-name": "Añade un nombre a tu tarea",
+    "task-description": "Añade una descripción a tu tarea",
+    "edit-client": "Edita el Cliente",
+    "modify-name-client": "Modifica el nombre del cliente",
+    "modify-description-client": "Modifica la descripción del cliente",
+    "edit-project": "Edita el Proyecto",
+    "modify-name-project": "Modifica el nombre del proyecto",
+    "modify-description-project": "Modifica la descripción del proyecto",
+    "edit-task": "Edita la Tarea",
+    "modify-name-task": "Modifica el nombre de la tarea",
+    "modify-description-task": "Modifica la descripción de la tarea"
   }
 }
+

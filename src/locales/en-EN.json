@@ -40,5 +40,29 @@
   "backend-warning" : {
     "patient": "Please, be patient.",
     "reason": "The backend is slow to respond. It's located on a free onRender server."
+  },
+  "modal" : {
+    "active-client": "Enable or disable client",
+    "save": "Save",
+    "close": "Close",
+    "new-client": "New Client",
+    "client-name": "Add a name to your client",
+    "client-description": "Add a description to your client",
+    "new-project": "New Project",
+    "project-name": "Add a name to your project",
+    "project-description": "Add a description to your project",
+    "new-task": "New Task",
+    "task-name": "Add a name to your task",
+    "task-description": "Add a description to your task",
+    "edit-client": "Edit Client",
+    "modify-name-client": "Modify the name of the client",
+    "modify-description-client": "Modify the description of the client",
+    "edit-project": "Edit Project",
+    "modify-name-project": "Modify the name of the project",
+    "modify-description-project": "Modify the description of the project",
+    "edit-task": "Edit Task",
+    "modify-name-task": "Modify the name of the task",
+    "modify-description-task": "Modify the description of the task"
+   
   }
 }
