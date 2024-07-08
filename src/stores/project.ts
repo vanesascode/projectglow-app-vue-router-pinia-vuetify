@@ -25,10 +25,9 @@ export const useProjectsStore = defineStore({
       try {
         const response = await projectService.getProjects(clientId);
         this.projects = response ? response : [];
+        this.loading = false;
       } catch (error) {
         console.error(error);
-      } finally {
-        this.loading = false;
       }
     },
 
@@ -39,10 +38,9 @@ export const useProjectsStore = defineStore({
         const newProject = { ...project, isEnabled: true, tasks: [] };
         await projectService.addProject(newProject, clientId);
         await this.getAllProjects(clientId);
+        this.loading = false;
       } catch (error) {
         console.error(error);
-      } finally {
-        this.loading = false;
       }
     },
 
@@ -52,10 +50,9 @@ export const useProjectsStore = defineStore({
       try {
         await projectService.deleteProject(project, clientId);
         await this.getAllProjects(clientId);
+        this.loading = false;
       } catch (error) {
         console.error(error);
-      } finally {
-        this.loading = false;
       }
     },
 
@@ -69,10 +66,9 @@ export const useProjectsStore = defineStore({
       try {
         await projectService.editProject(project, projectId, clientId);
         await this.getAllProjects(clientId);
+        this.loading = false;
       } catch (error) {
         console.error(error);
-      } finally {
-        this.loading = false;
       }
     },
   },
