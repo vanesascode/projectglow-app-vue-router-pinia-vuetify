@@ -48,7 +48,7 @@ const changeLocale = (locale: string) => {
  
 
     <v-card class="mx-auto pa-8 pb-8" elevation="8" max-width="430" rounded="lg">
-      <div class="d-flex justify-end ga-4 language-box">
+      <div class="d-flex justify-end ga-6 language-box">
       <button @click="changeLocale('en-EN')">ES</button>
       <button @click="changeLocale('es-ES')">EN</button>
     </div>
@@ -111,12 +111,6 @@ const changeLocale = (locale: string) => {
   color: white !important;
   font-weight: lighter;
 }
-
-// .v-card-text::before {
-//   content: '!!! ';
-//   color: rgb(183, 62, 62);
-//   font-weight: bolder;
-// }
 
 .login-button {
   width: 100%;
