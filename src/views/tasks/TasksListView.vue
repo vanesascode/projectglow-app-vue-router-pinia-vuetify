@@ -7,16 +7,16 @@ import { Task } from 'types';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 import { toastInterface, options as toastOptions } from '@/plugins/toastification';
 
-// GET TASKS:
-
-const tasksStore = useTasksStore();
-
 const props = defineProps<{
   clientId: string;
   clientName: string;
   projectId: string;
   projectName: string;
 }>();
+
+// GET TASKS:
+
+const tasksStore = useTasksStore();
 
 const listAllTasks = async (clientId: number, projectId: number): Promise<void> => {
   await tasksStore.getAllTasks(clientId, projectId);
@@ -35,7 +35,7 @@ onMounted(async () => {
 
 const tasks = computed(() => tasksStore.tasks);
 
-// TABLE:
+// TABLE HEADERS:
 
 const headers: any =
   // ReadonlyArray<{
@@ -139,7 +139,37 @@ const itemsPerPage = ref(10);
 </script>
 
 <template>
-  <div class="d-flex justify-center">
+  <!-- Skeleton loader -->
+
+  <div v-if="tasksStore.loading === true">
+    <v-card flat width="1200px" class="hidden">
+      <v-card-title class="d-flex align-center pe-2">
+        <BreadCrumbs
+          :clientId="props.clientId"
+          :clientName="props.clientName"
+          :projectId="props.projectId"
+          :projectName="props.projectName"
+        />
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          density="compact"
+          label="Search"
+          prepend-inner-icon="mdi-magnify"
+          variant="solo-filled"
+          flat
+          hide-details
+          single-line
+        ></v-text-field>
+      </v-card-title>
+    </v-card>
+    <v-skeleton-loader :elevation="14" type="table-thead"></v-skeleton-loader>
+    <v-skeleton-loader :elevation="14" type="table-tbody"></v-skeleton-loader>
+  </div>
+
+  <!-- Tasks table -->
+
+  <div class="d-flex justify-center" v-if="tasksStore.loading === false">
     <v-card flat width="1200px">
       <v-card-title>
         <div class="d-flex flex-column flex-md-row align-md-center justify-space-between">
@@ -151,8 +181,6 @@ const itemsPerPage = ref(10);
           />
 
           <v-spacer></v-spacer>
-
-          <!-- Search Bar -->
 
           <v-text-field
             v-model="search"
