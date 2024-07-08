@@ -205,9 +205,9 @@ const itemsPerPage = ref(10);
               <EditModal
                 @new-item="handleEditClient($event, item.id)"
                 model-icon="mdi-pencil-outline"
-                model-title="Edit Client"
-                model-name="Modify the name to your client"
-                model-description="Modify the description to your client"
+                :model-title="$t('modal.edit-client')"
+                :model-name="$t('modal.modify-name-client')"
+                :model-description="$t('modal.modify-description-client')"
                 :name-to-be-edited="item.name"
                 :description-to-be-edited="item.description ?? ''"
                 clientsModal
@@ -230,8 +230,8 @@ const itemsPerPage = ref(10);
 
   <InputModal
     @new-item="handleAddNewClient($event)"
-    title="New Client"
-    name="Add a name to your client"
-    description="Add a description to your client"
+    :title="$t('modal.new-client')"
+    :name="$t('modal.client-name')"
+    :description="$t('modal.client-description')"
   />
 </template>
