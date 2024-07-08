@@ -1,6 +1,6 @@
 ![logo-github](https://github.com/vanesascode/projectglow-app-vue-router-pinia-vuetify/assets/131259155/3ee9a5f2-f96e-4472-b2d4-1a7b1bcb0633)
 
-`Clients and projects management tool` built with Vue, Vite, Vue Router, Pinia and Vuetify. Tested with Vitest and Cypress.
+`Clients and projects management tool` built with Vue, Vite, Vue Router, Pinia and Vuetify. Tested with Cypress.
 
 ![examples-app](https://github.com/vanesascode/projectglow-app-vue-router-pinia-vuetify/assets/131259155/36d40671-e1fe-4033-abb7-65ae12ea0e02)
 
