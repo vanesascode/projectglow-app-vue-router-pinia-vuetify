@@ -8,6 +8,10 @@ import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 import EditModal from '@/components/modals/EditModal.vue';
 import BackendSlowWarningModal from '@/components/modals/BackendSlowWarningModal.vue';
 import { toastInterface, options as toastOptions } from '@/plugins/toastification';
+import { useI18n } from 'vue-i18n'
+
+
+const { t } = useI18n()
 
 const router = useRouter();
 
@@ -25,6 +29,16 @@ onBeforeMount(async () => {
   } catch (error) {
     console.error('Error in onBeforeMount hook:', error);
   }
+
+  const tableItemsPerPageText = document.querySelector('.v-data-table-footer__items-per-page span');
+   if (tableItemsPerPageText) {
+   tableItemsPerPageText.textContent = t('clients-table.items-per-page');
+ }
+
+  const tableSearchText = document.querySelector('.v-field-label');
+  if (tableSearchText) {
+    tableSearchText.textContent = t('clients-table.search');
+  }
 });
 
 const clients = computed(() => clientsStore.clients);
@@ -41,28 +55,28 @@ const headers: any =
     },
     {
       key: 'name',
-      title: 'Name',
+      title: t('clients-table.name'),
       align: 'start',
     },
     {
       key: 'description',
-      title: 'Description',
+      title: t('clients-table.description'),
       align: 'start',
     },
     {
       key: 'isEnabled',
-      title: 'Active',
+      title: t('clients-table.active'),
       align: 'center',
     },
     {
       key: 'projects',
-      title: 'Projects',
+      title: t('clients-table.projects'),
       align: 'center',
       sortable: false,
     },
     {
       key: 'actions',
-      title: 'Actions',
+      title: t('clients-table.actions'),
       align: 'center',
       sortable: false,
     },
@@ -113,6 +127,7 @@ const handleEditClient = (
 const search = ref('');
 const page = ref(1);
 const itemsPerPage = ref(10);
+
 </script>
 
 <template>
@@ -129,12 +144,13 @@ const itemsPerPage = ref(10);
           <v-text-field
             v-model="search"
             density="compact"
-            label="Search"
+          
             prepend-inner-icon="mdi-magnify"
             variant="solo-filled"
             flat
             hide-details
             single-line
+            :placeholder="$t('clients-table.search')"
           ></v-text-field>
         </v-card-title>
       </v-card>
