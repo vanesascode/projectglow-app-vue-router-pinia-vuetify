@@ -1,0 +1,40 @@
+{
+  "login": {
+    "name": "Name",
+    "password": "Password",
+    "forgot-password": "Forgot login password?",
+    "enter-name": "Enter your name",
+    "enter-password": "Enter your Password",
+    "warning": "After 3 consecutive failed login attempts, you account will be temporarily locked for three hours.",
+    "login": "Log In"
+  },
+  "breadcrumbs": {
+    "clients": "Clients:",
+    "projects": "Projects:",
+    "tasks": "Tasks:"
+  },
+  "clients-table": {
+    "name": "Name",
+    "description": "Description",
+    "active": "Active",
+    "projects": "Projects",
+    "actions": "Actions",
+    "items-per-page": "Items per page:"
+  },
+  "navbar": {
+    "welcome": "Welcome back, "
+  },
+  "projects-table": {
+    "name": "Name",
+    "description": "Description",
+    "progress": "Progress",
+    "tasks": "Tasks",
+    "actions": "Actions"
+  },
+  "tasks-table": {
+    "name": "Name",
+    "description": "Description",
+    "completed-at": "Completed at",
+    "actions": "Actions"
+  }
+}
