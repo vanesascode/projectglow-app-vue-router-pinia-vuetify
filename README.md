@@ -1,6 +1,8 @@
-# VUETIFY, PINIA 'PROJECTS MANAGEMENT APP' TESTED WITH CYPRESS
+![logo-github](https://github.com/vanesascode/projectglow-app-vue-router-pinia-vuetify/assets/131259155/3ee9a5f2-f96e-4472-b2d4-1a7b1bcb0633)
 
-![Screenshot 2024-06-30 at 14 50 53](https://github.com/vanesascode/projects-app-vue-pinia-cypress/assets/131259155/e3709a5d-d3d5-4bc4-9c58-8e63bef1a36d)
+`Clients and projects management tool` built with Vue, Vite, Vue Router, Pinia and Vuetify. Tested with Vitest and Cypress.
+
+![examples-app](https://github.com/vanesascode/projectglow-app-vue-router-pinia-vuetify/assets/131259155/36d40671-e1fe-4033-abb7-65ae12ea0e02)
 
 ## Recommended IDE Setup
 
