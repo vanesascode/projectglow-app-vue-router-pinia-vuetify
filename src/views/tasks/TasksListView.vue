@@ -35,16 +35,6 @@ onMounted(async () => {
   } catch (error) {
     console.error('Error in onMounted hook:', error);
   }
-
-  const tableItemsPerPageText = document.querySelector('.v-data-table-footer__items-per-page span');
-   if (tableItemsPerPageText) {
-   tableItemsPerPageText.textContent = t('clients-table.items-per-page');
- }
-
-  const tableSearchText = document.querySelector('.v-field-label');
-  if (tableSearchText) {
-    tableSearchText.textContent = t('clients-table.search');
-  }
 });
 
 const tasks = computed(() => tasksStore.tasks);
@@ -162,7 +152,7 @@ const itemsPerPage = ref(10);
           <v-text-field
             v-model="search"
             density="compact"
-            label="Search"
+            :label="$t('clients-table.search')"
             prepend-inner-icon="mdi-magnify"
             variant="solo-filled"
             flat
@@ -195,7 +185,7 @@ const itemsPerPage = ref(10);
           <v-text-field
             v-model="search"
             density="compact"
-            label="Search"
+            :label="$t('clients-table.search')"
             prepend-inner-icon="mdi-magnify"
             variant="solo-filled"
             flat
