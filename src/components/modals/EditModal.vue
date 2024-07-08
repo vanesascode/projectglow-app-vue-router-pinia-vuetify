@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { onUpdated, ref } from 'vue';
+import { useI18n } from 'vue-i18n'
+
+
+const { t } = useI18n()
 
 interface Props {
   modelTitle: string;
@@ -81,14 +85,14 @@ const closeModal = () => {
             @change="isEnabled ? !isEnabled : isEnabled"
             v-model="isEnabled"
           />
-          <label for="active">Enable or disable client</label>
+          <label for="active">{{ $t('modal.active-client') }}</label>
         </div>
 
         <v-card-actions>
           <v-spacer></v-spacer>
           <div>
-            <v-btn type="submit" @click="submitValue">Save</v-btn>
-            <v-btn text="Close" @click="closeModal"></v-btn>
+            <v-btn type="submit" @click="submitValue">{{ $t('modal.save') }}</v-btn>
+            <v-btn type="text" @click="closeModal">{{ $t('modal.close') }}</v-btn>
           </div>
         </v-card-actions>
       </v-form>
