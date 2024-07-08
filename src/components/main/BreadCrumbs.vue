@@ -4,6 +4,9 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 interface Props {
   name?: string;
@@ -23,24 +26,23 @@ interface BreadcrumbItem {
 }
 
 const items = ref<BreadcrumbItem[]>([]);
-const showDivider = ref(false);
 
 watch(
   () => props.name,
   () => {
     items.value = [
       {
-        title: 'Clients:',
+        title: t('breadcrumbs.clients'),
         disabled: false,
         href: '/#clients',
       },
       {
-        title: props.clientId ? `${props.clientName} Projects:` : '',
+        title: props.clientId ? `${props.clientName}  ${t('breadcrumbs.projects')}` : '',
         disabled: props.projectsPage ? true : false,
         href: `/#clients/${props.clientId}/${props.clientName}/projects`,
       },
       {
-        title: props.projectName ? `${props.projectName} Tasks:` : '',
+        title: props.projectName ? `${props.projectName} ${t('breadcrumbs.tasks')}` : '',
         disabled: true,
         href: '',
       },
