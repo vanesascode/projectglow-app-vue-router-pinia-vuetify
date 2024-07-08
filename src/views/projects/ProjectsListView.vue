@@ -8,14 +8,14 @@ import router from '@/router';
 import BreadCrumbs from '@/components/main/BreadCrumbs.vue';
 import { toastInterface, options as toastOptions } from '@/plugins/toastification';
 
-// GET PROJECTS:
-
-const projectsStore = useProjectsStore();
-
 const props = defineProps<{
   clientId: string;
   clientName: string;
 }>();
+
+// GET PROJECTS:
+
+const projectsStore = useProjectsStore();
 
 const listAllProjects = async (clientId: number): Promise<void> => {
   await projectsStore.getAllProjects(clientId);
@@ -33,7 +33,7 @@ onMounted(async () => {
 
 const projects = computed(() => projectsStore.projects);
 
-// TABLE:
+// TABLE HEADERS:
 
 const headers: any =
   // ReadonlyArray<{
@@ -131,7 +131,36 @@ const itemsPerPage = ref(10);
 </script>
 
 <template>
-  <div class="d-flex justify-center">
+  <!-- Skeleton loader -->
+
+  <div v-if="projectsStore.loading === true">
+    <v-card flat width="1200px" class="hidden">
+      <v-card-title class="d-flex align-center pe-2">
+        <BreadCrumbs
+          :clientId="props.clientId"
+          :projectsPage="true"
+          :clientName="props.clientName"
+        />
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          density="compact"
+          label="Search"
+          prepend-inner-icon="mdi-magnify"
+          variant="solo-filled"
+          flat
+          hide-details
+          single-line
+        ></v-text-field>
+      </v-card-title>
+    </v-card>
+    <v-skeleton-loader :elevation="14" type="table-thead"></v-skeleton-loader>
+    <v-skeleton-loader :elevation="14" type="table-tbody"></v-skeleton-loader>
+  </div>
+
+  <!-- Clients table -->
+
+  <div class="d-flex justify-center" v-if="projectsStore.loading === false">
     <v-card flat width="1200px">
       <v-card-title>
         <div class="d-flex flex-column flex-sm-row align-sm-center justify-space-between">
@@ -142,8 +171,6 @@ const itemsPerPage = ref(10);
           />
 
           <v-spacer></v-spacer>
-
-          <!-- Search Bar -->
 
           <v-text-field
             v-model="search"
@@ -208,6 +235,7 @@ const itemsPerPage = ref(10);
       </v-data-table>
     </v-card>
   </div>
+
   <!-- To add a new project -->
 
   <InputModal
