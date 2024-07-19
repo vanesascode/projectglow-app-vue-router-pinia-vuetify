@@ -5,7 +5,7 @@
     "forgot-password": "Forgot login password?",
     "enter-name": "Enter your name",
     "enter-password": "Enter your Password",
-    "warning": "After 3 consecutive failed login attempts, you account will be temporarily locked for three hours.",
+    "warning": "Please be patient when the table is loading. The server is hosted on onRender Free and can be a little slow at first. Just write your name and go in (no need for the password). Thank you!",
     "login": "Log In"
   },
   "breadcrumbs": {
@@ -20,7 +20,7 @@
     "projects": "Projects",
     "actions": "Actions",
     "items-per-page": "Items per page:",
-     "search": "Search"
+    "search": "Search"
   },
   "navbar": {
     "welcome": "Welcome back, "
@@ -38,11 +38,11 @@
     "completed-at": "Completed at",
     "actions": "Actions"
   },
-  "backend-warning" : {
+  "backend-warning": {
     "patient": "Please, be patient.",
     "reason": "The backend is slow to respond. It's located on a free onRender server."
   },
-  "modal" : {
+  "modal": {
     "active-client": "Enable or disable client",
     "save": "Save",
     "close": "Close",
@@ -64,6 +64,5 @@
     "edit-task": "Edit Task",
     "modify-name-task": "Modify the name of the task",
     "modify-description-task": "Modify the description of the task"
-   
   }
 }

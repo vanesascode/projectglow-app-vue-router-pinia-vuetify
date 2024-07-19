@@ -5,7 +5,7 @@
     "forgot-password": "¿Olvidaste la contraseña?",
     "enter-name": "Introduce tu nombre",
     "enter-password": "Introduce tu contraseña",
-    "warning": "Después de 3 intentos fallidos de inicio de sesión consecutivos, su cuenta se bloqueará temporalmente por tres horas.",
+    "warning": "Por favor, ten paciencia cuando la tabla se esté cargando. El servidor está alojado en onRender Free y puede ser un poco lento al principio. Tan solo escribe tu nombre y entra (no necesitas poner contraseña). ¡Gracias!",
     "login": "Accede"
   },
   "breadcrumbs": {
@@ -38,11 +38,11 @@
     "completed-at": "Completada el",
     "actions": "Acciones"
   },
-  "backend-warning" : {
+  "backend-warning": {
     "patient": "Por favor sea paciente.",
     "reason": "El backend tarda en responder. Está ubicado en un servidor onRender gratuito."
   },
-  "modal" : {
+  "modal": {
     "active-client": "Activa o desactiva el cliente",
     "save": "Guardar",
     "close": "Cerrar",
@@ -66,4 +66,3 @@
     "modify-description-task": "Modifica la descripción de la tarea"
   }
 }
-
